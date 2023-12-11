@@ -7,6 +7,11 @@ The tutorial is here: https://angular.io/tutorial/tour-of-heroes
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
 [What is Angular (Great overview!)](https://angular.io/guide/what-is-angular)
 
+# Helpful Links
+1. [Full stack web dev in Rider](https://www.jetbrains.com/guide/dotnet/tips/full-stack-web-development-with-rider/)
+2. Jason Watmore's [Angular series](https://jasonwatmore.com/angular-15-free-course-1-create-base-project-structure)
+3. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
+
 # Ngmodules aren't needed anymore with standalone components
 [Great quick overview video](https://youtu.be/x5PZwb4XurU?si=Fuv2gWyfMMqh_f1S)  
 [Standalone vs NgModule pattern](https://angular.io/guide/what-is-angular#organization)  
