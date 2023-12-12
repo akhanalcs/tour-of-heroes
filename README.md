@@ -1,19 +1,18 @@
 # tour-of-heroes
 Learning Angular with Tour of Heroes tutorial from Angular docs.
 
-The tutorial is here: https://angular.io/tutorial/tour-of-heroes
+I'll be following along this tutorial: https://angular.io/tutorial/tour-of-heroes
 
-# Learn fundamentals
+## Learn fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
 [What is Angular (Great overview!)](https://angular.io/guide/what-is-angular)
 
-# Helpful Links
+## Helpful links
 1. [Full stack web dev in Rider](https://www.jetbrains.com/guide/dotnet/tips/full-stack-web-development-with-rider/)
-2. Jason Watmore's [Angular series](https://jasonwatmore.com/angular-15-free-course-1-create-base-project-structure)
-3. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
+2. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
 
-# Ngmodules aren't needed anymore with standalone components
-[Great quick overview video](https://youtu.be/x5PZwb4XurU?si=Fuv2gWyfMMqh_f1S)  
+## Standalone vs NgModule pattern
+[Great overview video](https://youtu.be/x5PZwb4XurU?si=Fuv2gWyfMMqh_f1S)  
 [Standalone vs NgModule pattern](https://angular.io/guide/what-is-angular#organization)  
 [Standalone components](https://angular.io/guide/standalone-components)
 
@@ -62,10 +61,10 @@ export class NameCardComponent {
 }
 ```
 
-# Local setup
+## Local setup
 Reference: https://angular.io/guide/setup-local
 
-## Setup Node
+### Setup Node
 Node.js is a JavaScript-based runtime environment that executes JS code outside of a web browser. You can use it to create web-servers and networked applications. You can also use it to perform helpful tasks on your computer such as concatenating and minifying JavaScript files and compiling Sass files into CSS.
 
 NPM is a “package manager” that makes installing Node “packages” fast and easy. A package, also called a module, is just a code library that extends Node by adding useful features. For example, the “request” module simplifies the process of making HTTP requests so you can easily get web resources from other sites.
@@ -159,37 +158,6 @@ npx prettier --write somefile.js
 
 It first looks into your local project's dependencies for a command. If it can't find it locally, then it searches in globally installed packages. And if it can't find it there either, npx will temporarily download, use, and remove the package - helping ensure you use the latest version all the time without needing to permanently install it.
 
-## Setup Angular CLI
-[Reference](https://angular.io/guide/setup-local#install-the-angular-cli)
-
-Choose either way (1 or 2) shown below.
-
-1. Installs the Angular CLI package locally in the current directory.
-   ```bash
-   npx --package @angular/cli
-   ```
-
-2. Installs the Angular CLI package globally on the computer.
-   ```bash
-   npm install -g @angular/cli
-   ```
-
-Now check the Angular version
-```bash
-ng version
-```
-
-<img width="500" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/df24558b-477d-4146-933d-ef7e9ce20dfc">
-
-If it asks you to allow angular cli to autocomplete commands, choose Y which will write this to your `.bash_profile`:
-
-<img width="400" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/70f6a3d1-79fb-4cf8-a529-780421099368">
-
-Later when you want to **uninstall** Angular CLI, you can simply do this
-```bash
-npm uninstall -g @angular/cli
-```
-
 ## Setting up your IDE
 I'm using Jetbrains Rider. It already comes with the features present in WebStorm so I don't have to use a separate IDE for doing full stack work.
 
@@ -238,7 +206,38 @@ https://plugins.jetbrains.com/plugin/7086-acejump
 #### String Manipulation
 https://plugins.jetbrains.com/plugin/2162-string-manipulation
 
-# Create a new app
+## Setup Angular CLI
+[Reference](https://angular.io/guide/setup-local#install-the-angular-cli)
+
+Choose either way (1 or 2) shown below.
+
+1. Installs the Angular CLI package locally in the current directory.
+   ```bash
+   npx --package @angular/cli
+   ```
+
+2. Installs the Angular CLI package globally on the computer.
+   ```bash
+   npm install -g @angular/cli
+   ```
+
+Now check the Angular version
+```bash
+ng version
+```
+
+<img width="500" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/df24558b-477d-4146-933d-ef7e9ce20dfc">
+
+If it asks you to allow angular cli to autocomplete commands, choose Y which will write this to your `.bash_profile`:
+
+<img width="400" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/70f6a3d1-79fb-4cf8-a529-780421099368">
+
+Later when you want to **uninstall** Angular CLI, you can simply do this
+```bash
+npm uninstall -g @angular/cli
+```
+
+## Create a new app
 
 
 
