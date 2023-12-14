@@ -3,6 +3,23 @@ Learning Angular with Tour of Heroes tutorial from Angular docs.
 
 I'll be following along this tutorial: https://angular.io/tutorial/tour-of-heroes
 
+Agenda for today:
+angular ssr with aspnet core backend - https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1
+https://github.com/thecloudnativewebapp/GoCloudNative.Bff
+https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0#resources
+
+
+TS handbook
+tour of heroes
+node tutorial
+
+cook rice at 2
+
+Go to asian market to get pearl river bridge mushroom dark soy sauce
+
+https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/
+https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/
+
 ## Helpful links
 1. [Full stack web dev in Rider](https://www.jetbrains.com/guide/dotnet/tips/full-stack-web-development-with-rider/)
 2. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
@@ -295,6 +312,8 @@ The `main.ts` file is the [entry point into our app](https://youtu.be/zTLDv5YIpq
 
 ### tsconfig.json
 More info [here](https://youtu.be/ahCwqrYpIuM?si=w_RZN7F2rsnA-ULk) and [here](https://angular.io/config/tsconfig).
+
+The best one is at Typescript's [official web site](https://www.typescriptlang.org/tsconfig).
 
 ### Check out other files on your own
 They are pretty straightforward.
