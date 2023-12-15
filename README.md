@@ -28,6 +28,70 @@ https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-sta
 https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-oop.html  
 https://www.typescriptlang.org/docs/handbook/intro.html
 
+The above links are EXCELLENT! Read them!
+
+### Prototype chain
+When you create an object using the new keyword and a constructor function, a link is established between the new object (for eg: `john` shown below) and the prototype object of the constructor function (`Person.prototype`). This link forms part of what we call the prototype chain.
+
+```js
+function Person(name) {
+  this.name = name;
+}
+
+let john = new Person("John");
+
+console.log(john.__proto__ === Person.prototype); // Outputs: true
+console.log(Object.getPrototypeOf(john) === Person.prototype); // Outputs: true
+console.log(john.__proto__.constructor === Person); // Outputs: true
+```
+`john.__proto__` is the same as `Person.prototype`, which means `Person.prototype` is indeed in `john`'s prototype chain.
+JavaScript sets up a link in the prototype chain from `john` all the way up to `Object.prototype`, through `Person.prototype`.
+
+### type predicate
+```ts
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+```
+`pet is Fish` is our type predicate in this example. A predicate takes the form `parameterName is Type`, where `parameterName` must be the name of a parameter from the current function signature.
+
+`pet is Fish` is a special syntax in TypeScript that lets the type checker in TS compiler know that `isFish`, when called, will perform a runtime check that narrows `pet` to `Fish` type if the function returns `true`, and excludes `Fish` from the possible types of `pet` when `false` is returned.
+
+The real runtime return type of `isFish` function is boolean.
+
+```ts
+// Both calls to 'swim' and 'fly' are now okay.
+let pet = getSmallPet(); // Type of pet here is: let pet: Fish | Bird
+ 
+if (isFish(pet)) {
+  pet.swim(); // Type of pet here is: let pet: Fish
+} else {
+  pet.fly(); // Type of pet here is: let pet: Bird
+}
+```
+### Discriminated Unions
+A discriminated union in TypeScript is a pattern where each type in a union type has a common property (each with a literal type) that can uniquely identify each type possible in the union.
+
+```ts
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+ 
+interface Square {
+  kind: "square";
+  sideLength: number;
+}
+ 
+type Shape = Circle | Square;
+```
+
+In above example, `kind` is known as the discriminant, and the specific strings "circle" and "square" are the literal types.
+
+It can be used in a function that looks like
+🙂
+
+
 ## Learn Angular fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
 [What is Angular (Great overview!)](https://angular.io/guide/what-is-angular)
