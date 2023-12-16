@@ -206,11 +206,64 @@ function greet(name: string): void {
 }
 ```
 
+### Index signatures
+Here, `[index: number]: string;` means that the StringArray interface represents an object which can be indexed by a number, and that will return a string.
 
+This index signature states that when a `StringArray` is indexed with a `number`, it will return a `string`.
 
+```ts
+interface StringArray {
+  [index: number]: string;
+}
+ 
+const myArray: StringArray = ["Bob", "Fred"];
+const secondItem = myArray[0]; // outputs: Bob
+```
 
+Type of number index must be a subtype of string index.
 
+For eg:
+```ts
+interface Animal {
+  name: string;
+}
+ 
+interface Dog extends Animal {
+  breed: string;
+}
+```
 
+So this is not Ok
+```ts
+// Error: indexing with a numeric string might get you a completely separate type of Animal!
+interface NotOkay {
+  [x: number]: Animal;
+  // 'number' index type 'Animal' is not assignable to 'string' index type 'Dog'.
+  [x: string]: Dog;
+}
+```
+Because
+```ts
+// It expects that indexing with a number should give you an Animal, but indexing with a "number" gives you a Dog, which aren't the same thing.
+let animal = obj[0]; // Same as obj["0"]
+let dog = obj["0"];
+```
+
+But this is Ok
+```ts
+interface Okay {
+  [x: number]: Dog;
+  [x: string]: Animal; // Remembering Tip: The string index "wins" 👑 and since Dog is assignable to animal, this is fine.
+}
+```
+Because
+```ts
+// It expects that indexing with a number should give you a Dog, but indexing with a "number" gives you an Animal, which are the same things. 
+let dog = obj[0]; // Expect Dog // Same as obj["0"]
+let animal = obj["0"]; // Expect animal
+```
+
+In conclusion, Type returned from a numeric indexer must be assignable to type returned from the string indexer.
 
 ## Learn Angular fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
