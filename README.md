@@ -89,7 +89,127 @@ type Shape = Circle | Square;
 In above example, `kind` is known as the discriminant, and the specific strings "circle" and "square" are the literal types.
 
 It can be used in a function that looks like
-🙂
+```ts
+function getArea(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.sideLength ** 2;
+    default:
+      const _exhaustiveCheck: never = shape; // The type of shape is "never" here because we've already checked all the possible types
+      return _exhaustiveCheck;
+  }
+}
+```
+
+### Function overloads
+```ts
+function fn(x: string): void; // <---- OVERLOAD SIGNATURE
+function fn() {               // <---- IMPLEMENTATION SIGNATURE
+  // ...
+}
+// Expected to be able to call with zero arguments
+fn();                         // <---- ERROR: Expected 1 arguments, but got 0.
+```
+The signature used to write the function body can’t be “seen” from the outside.
+
+The signature of the implementation is not visible from the outside. When writing an overloaded function, you should always have two or more signatures above the implementation of the function.
+The implementation signature must also be compatible with the overload signatures.
+
+This is better
+```ts
+function len(x: any[] | string) {
+  return x.length;
+}
+len(""); // OK
+len([0]); // OK
+len(Math.random() > 0.5 ? "hello" : [0]); // OK
+```
+than
+```ts
+function len(s: string): number;
+function len(arr: any[]): number;
+function len(x: any) {
+  return x.length;
+}
+len(""); // OK
+len([0]); // OK
+len(Math.random() > 0.5 ? "hello" : [0]); // NOT OK
+```
+
+Always prefer parameters with union types instead of overloads when possible.
+
+### Rest parameters
+The rest parameter syntax allows a function to accept an indefinite number of arguments as an array, providing a way to represent variadic functions in JavaScript.
+
+A rest parameter appears after all other parameters, and uses the ... (spread) syntax.
+```ts
+function multiply(n: number, ...m: number[]) {
+  return m.map((x) => n * x);
+}
+// 'a' gets value [10, 20, 30, 40]
+const a = multiply(10, 1, 2, 3, 4);
+```
+
+### Destructuring assignment
+The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
+```js
+let a, b, rest;
+[a, b, ...rest] = [10, 20, 30, 40, 50];
+console.log(a);
+// Expected output: 10
+console.log(rest);
+// Expected output: Array [30, 40, 50]
+```
+
+Example in TS
+```ts
+type ABC = { a: number; b: number; c: number };
+function sum({ a, b, c }: ABC) {
+  console.log(a + b + c);
+}
+sum({ a: 1, b: 2, c: 3});  // Outputs: 6
+```
+
+### Function Type Declaration vs Literal Function Definition
+**Declaration:** Just declare something. Tell compiler about the existence of a variable or a function, its type and its name but don't allocate or assign anything to it. 
+```ts
+function sayHello(): void;
+```
+**Definition:** Declare + Provide Implementation.
+```ts
+function sayHello(): void {
+  console.log("Hello");
+}
+```
+#### Function Type Declaration aka Function Type Expression
+Declaration and Implementation separate
+
+Eg:
+```ts
+let greet: (a: string) => void; // Declare a variable with a specific function type.
+```
+Assign a function to `greet`, it becomes a function definition because now `greet` refers to a specific function implementation:
+```ts
+greet = (name) => {
+  console.log(`Hello, ${name}!`);
+};
+```
+#### Literal Function Definition aka Named Function Definition
+Declaration + Implementation
+
+Function is given a name directly up front.
+```ts
+function greet(name: string): void {
+  console.log(`Hello, ${name}!`);
+}
+```
+
+
+
+
+
 
 
 ## Learn Angular fundamentals
