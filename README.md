@@ -103,7 +103,7 @@ function getArea(shape: Shape) {
 }
 ```
 
-### Function overloads
+### Function overloads (just use [Generic functions](https://www.typescriptlang.org/docs/handbook/2/functions.html#generic-functions) instead)
 ```ts
 function fn(x: string): void; // <---- OVERLOAD SIGNATURE
 function fn() {               // <---- IMPLEMENTATION SIGNATURE
@@ -220,7 +220,7 @@ const myArray: StringArray = ["Bob", "Fred"];
 const secondItem = myArray[0]; // outputs: Bob
 ```
 
-Type of number index must be a subtype of string index.
+It is possible to support both types of indexers, but the type returned from a numeric indexer must be a subtype of the type returned from the string indexer.
 
 For eg:
 ```ts
@@ -233,7 +233,7 @@ interface Dog extends Animal {
 }
 ```
 
-So this is not Ok
+But this is not Ok
 ```ts
 // Error: indexing with a numeric string might get you a completely separate type of Animal!
 interface NotOkay {
@@ -249,13 +249,14 @@ let animal = obj[0]; // Same as obj["0"]
 let dog = obj["0"];
 ```
 
-But this is Ok
+This is Ok though
 ```ts
 interface Okay {
-  [x: number]: Dog;
+  [x: number]: Dog; // Type returned from Numeric indexer must be a subtype of the type returned from the string indexer
   [x: string]: Animal; // Remembering Tip: The string index "wins" 👑 and since Dog is assignable to animal, this is fine.
 }
 ```
+
 Because
 ```ts
 // It expects that indexing with a number should give you a Dog, but indexing with a "number" gives you an Animal, which are the same things. 
@@ -264,6 +265,25 @@ let animal = obj["0"]; // Expect animal
 ```
 
 In conclusion, Type returned from a numeric indexer must be assignable to type returned from the string indexer.
+
+### Tuple Types
+A tuple type is another sort of `Array` type that knows exactly how many elements it contains, and exactly which types it contains at specific positions.
+```ts
+type StringNumberPair = [string, number];
+```
+`StringNumberPair` describes arrays whose `0` index contains a `string` and whose `1` index contains a `number`.
+
+We can use it something like this
+```ts
+function doSomething(pair: [string, number]) {
+  const a = pair[0]; // const a: string
+  const b = pair[1]; // const b: number
+  // ...
+}
+ 
+doSomething(["hello", 42]);
+```
+
 
 ## Learn Angular fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
