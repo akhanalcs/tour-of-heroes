@@ -284,6 +284,133 @@ function doSomething(pair: [string, number]) {
 doSomething(["hello", 42]);
 ```
 
+### [Using Class Types in Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-class-types-in-generics)
+When creating factories in TypeScript using generics, it is necessary to refer to class types by their constructor functions. For example
+```ts
+// Takes constructor function as a parameter and use it to create and return a new instance of Type
+function create<Type>(c: { new (): Type }): Type {
+  return new c();
+}
+```
+`c: { new (): Type }` means that `c` is a constructor function that, when called with `new` will return an instance of `Type`.  
+And `new c()` is where the constructor of c is invoked to create an instance of type `Type`.
+
+```ts
+// Same as above
+function create<Type>(c: new() => Type): Type {
+  return new c();
+}
+```
+
+You can use that like
+```ts
+class Dog {
+    bark() {
+        return 'Woof!';
+    }
+}
+
+let myDog = create(Dog); // <---------------------- CALLING THE CREATE FUNCTION HERE
+console.log(myDog.bark()); // Outputs: 'Woof!'
+```
+
+### `keyof` type operator
+```ts
+type Mapish = { [k: string]: boolean };
+type M = keyof Mapish;
+```
+Here type of M is `string | number` even when we specified index signature of type string. 
+
+Why this happens?  
+When we define a type like `{ [k: string]: boolean }`, we tell TypeScript that an object of this type can be indexed with any string. Because number indexes are implicitly converted to strings in JavaScript, TypeScript accepts that these objects can also be indexed with numbers.
+
+Use it like this
+```ts
+let map: Mapish = {};
+
+map["test"] = true;
+map[1] = true; // This becomes map["1"] because JS coerces number keys to strings
+
+// OR
+let strKey: M = "test";
+let numKey: M = 1;
+
+map[strKey] = true;
+map[numKey] = true;
+```
+
+### Indexed Access Type
+We can use indexed access type to lookup a specific property on another type.
+
+For eg:
+```ts
+type Person = { age: number; name: string; alive: boolean };
+type Age = Person["age"]; // Age is now of type number
+
+let john: Person = { age: 21, name: 'John', alive: true };
+let johnAge: Age = john.age; // johnAge is a number
+
+console.log(johnAge); // Outputs: 21
+```
+
+Another example
+```ts
+const MyArray = [
+  { name: "Alice", age: 15 },
+  { name: "Bob", age: 23 },
+  { name: "Eve", age: 38 },
+];
+ 
+type Person = typeof MyArray[number];
+/*
+// Type of Person is this:
+type Person = {
+    name: string;
+    age: number;
+}
+*/
+```
+`MyArray[number]` is essentially saying "If I have an array (like MyArray), and I access an item in that array at some arbitrary index (which is a number), what will be the type of item I get?"
+
+Essentially, `type Person = typeof MyArray[number];` is a nice shorthand to extract the type of a single item in an array literal.
+
+### Inferring with Conditional Types
+Consider below example that's defining a generic type alias that extracts the return type from a function type.
+```ts
+// "infer Return" is asking TS to figure out the return type of the function.
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
+  ? Return
+  : never;
+ 
+type Num = GetReturnType<() => number>; // type Num = number
+type Str = GetReturnType<(x: string) => string>; // type Str = string
+type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>; // type Bools = boolean[]
+```
+In TS, `never` represents a value that never occurs.
+`...args: never[]` means it's an array of something that could never occur, essentially leaving function arguments as a non-factor in the type-checking process. It treats the function parameters as if they're irrelevant to the type manipulation at hand, which is getting the return type of function.
+
+- `Type extends (...args: never[]) => infer Return` is an assertion that `Type` represents a function. It asks "can `Type` be assigned to a function type?".
+- `(...args: never[]) => infer Return` represents a function with any number and types of arguments and any return type.
+
+### Distributive Conditional Types
+Type of `StrArrOrNumArr` below is (`string | number)[]`.
+
+```ts
+type ToArray<Type> = Type[];
+type StrArrOrNumArr = ToArray<string | number>; // type of StrArrOrNumArr is "string | number)[]"
+```
+
+But let's say we want `(string[] | number[])` (typical behavior).
+```ts
+type ToArray<Type> = Type extends any ? Type[] : never;
+type StrArrOrNumArr = ToArray<string | number>; // type of StrArrOrNumArr is "string[] | number[]"
+```
+
+Conditional types are distributive over union types, which essentially means if a generic Type is a union type, the conditional type will be applied to each member of that union.
+
+So, the construct `Type extends any ? Type[] : never` is a particular pattern used to "distribute" across union types and apply some type transformation to each member of the union, rather than treating the union as a single type.
+
+
 
 ## Learn Angular fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
