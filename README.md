@@ -410,6 +410,188 @@ Conditional types are distributive over union types, which essentially means if 
 
 So, the construct `Type extends any ? Type[] : never` is a particular pattern used to "distribute" across union types and apply some type transformation to each member of the union, rather than treating the union as a single type.
 
+### Mapped Types
+Mapped Type is a generic type which uses a union of `PropertyKey`s to iterate through keys to create a type.
+
+Consider an application where you have a set of features that can be either enabled or disabled. Each feature is linked to a function (like `darkMode`, `newUserProfile` etc.), and you need an easy way to track whether each feature is currently turned on or off.
+```ts
+type Features = {
+  darkMode: () => void;
+  newUserProfile: () => void;
+};
+```
+Instead of manually creating a new type like:
+```ts
+type FeatureOptions = { darkMode: boolean; newUserProfile: boolean; }; 
+```
+which you'd need to update every time a feature is added, you could use a mapped type to automatically create this type for you based on the `Features` type.
+
+Create a mapped type
+```ts
+// "keyof Type" generates a union of the keys of "Type"
+// For eg below: "keyof Features" would be a union: "darkMode" | "newUserProfile"
+// "Property" is a placeholder for each key in the given "Type".
+// "[Property in keyof Type]: boolean" generates new properties based on "Type" where each property is a boolean.
+type OptionsFlags<Type> = {
+  [Property in keyof Type]: boolean;
+};
+```
+and use it to create a new type that has every property from `Features` mapped to a boolean
+```ts
+type FeatureOptions = OptionsFlags<Features>; // type of FeatureOptions is { darkMode: boolean; newUserProfile: boolean; }
+```
+
+### Mapping Modifiers
+```ts
+// Removes 'readonly' attributes from a type's properties
+type CreateMutable<Type> = {
+  -readonly [Property in keyof Type]: Type[Property];
+};
+ 
+type LockedAccount = {
+  readonly id: string;
+  readonly name: string;
+};
+ 
+type UnlockedAccount = CreateMutable<LockedAccount>; // type of "UnlockedAccount" is { id: string; name: string; }
+```
+
+- `[Property in keyof Type]` is the syntax for a mapped type. It means "for each property in Type".
+- `Type[Property]` is an indexed access, or lookup type. It means the type of the property `Property` in `Type`.
+
+### Union Types vs Intersection Types
+#### Intersection Types (&)
+Intersection types are used to combine multiple types into one. The resulting type has all the properties of the combined types.
+```ts
+type Name = {
+  name: string;
+};
+
+type Age = {
+  age: number;
+};
+
+type Person = Name & Age; 
+// Equivalent to: 
+// type Person = {
+//   name: string;
+//   age: number;
+// }
+```
+
+Another example
+```ts
+let value: string & number;   // Error: Type 'string & number' is reduced to 'never'.
+```
+
+`string & number` is an intersection type which would require a value to be both a string and a number at the same time which is impossible.
+
+#### Union Types (|)
+Union types are used when a value can be one of several types. A union type declaration has the form Type1 | Type2 | ... | TypeN.
+```ts
+type StringOrNumber = string | number;
+
+let variable: StringOrNumber;
+
+variable = 'Hello'; // OK
+variable = 123;     // OK
+variable = true;    // Error: Type 'boolean' is not assignable to type 'string | number'
+```
+
+In a nutshell, union types (|) are about _adding_ different types together, saying "the value is either this type or that type", whereas intersection types (&) are about _melding_ types together into one combined type.
+
+### Key remapping via `as`
+```ts
+type Getters<Type> = {
+    [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+};
+ 
+interface Person {
+    name: string;
+    age: number;
+}
+ 
+type LazyPerson = Getters<Person>; // type of "LazyPerson" is "{ getName: () => string; getAge: () => number; }"
+```
+`&` is the intersection operator and is used to combine multiple types into one.
+
+`Capitalize<string & Property>` is saying "ensure Property is considered a string and capitalize it". In actuality, `keyof` always produces a string or number or symbol, so the intersection with string isn't strictly necessary here.
+
+If in some imaginary scenario `Property` wasn't a string, `string & Property` wouldn't fall back to string or some default, it would resolve to never, which would make `Capitalize<never>` also `never` and `get${Capitalize<never>}` converts to `getNever`.
+
+The Capitalize utility type is a built-in TypeScript type that transforms the first letter of a string literal type to a capital letter.
+
+### Map over arbitrary unions
+You can map over arbitrary unions, not just unions of `string | number | symbol`, but unions of any type:
+
+For eg:  
+Different event types that the program can respond to might be defined as below. These types often have a `kind` property to distinguish between different kinds of events.
+```ts
+type SquareEvent = { kind: "square", x: number, y: number };
+type CircleEvent = { kind: "circle", radius: number };
+```
+
+Now, using the `EventConfig` type (explanation of this is [below](#explanation-of-eventconfig)),
+```ts
+type EventConfig<Events extends { kind: string }> = {
+    [E in Events as E["kind"]]: (event: E) => void;
+}
+```
+a `Config` type specific to these events can be generated
+```ts
+type Config = EventConfig<SquareEvent | CircleEvent>
+```
+
+The above line will generate a type that looks like
+```ts
+type Config = {
+  square: (event: SquareEvent) => void;
+  circle: (event: CircleEvent) => void;
+};
+```
+
+Now we can use the `Config` type to implement an event handlers map
+```ts
+let eventHandlers: Config = {
+    square: (event: SquareEvent) => {
+        console.log(`A square was drawn at (${event.x}, ${event.y})`);
+    },
+    circle: (event: CircleEvent) => {
+        console.log(`A circle was drawn with radius ${event.radius}`);
+    }
+};
+```
+
+So if your application triggers a SquareEvent:
+```ts
+let newSquareEvent: SquareEvent = { kind: "square", x: 10, y: 20 };
+
+// Trigger the event handler for "square".
+eventHandlers[newSquareEvent.kind](newSquareEvent);
+```
+
+After running this code, you would see _"A square was drawn at (10, 20)"_ printed to the console, because the corresponding event handler for the square kind is called.
+
+#### Explanation of EventConfig
+```ts
+type EventConfig<Events extends { kind: string }> = {
+    [E in Events as E["kind"]]: (event: E) => void;
+}
+```
+
+Here `Events` is used like "**types** of thing that can happen to which the program might need to respond".
+For eg: It refers to types of `SquareEvent` and `CircleEvent`.
+
+- `Events`(plural) is used to suggest that this type parameter can represent multiple "event" types, typically in a union.
+- `Events extends { kind: string }` is a constraint on the `Events` type variable. It means whatever type is provided must have a property named kind that is of type string.
+- `E in Events` is part of mapped types (a way to create new types based on old ones). It's like mapping over a list except it's mapping over the properties in a type. It's iterating over each member of the `Events` union.
+- `[E in Events as E["kind"]]` maps over `Events`, and for each type in the union (for eg: `SquareEvent`, `CircleEvent`), it uses the value of the kind property as the key. So each key in the new `EventConfig` type will be a string representing the kind of the event.
+- `(event: E) => void` means that for each E in Events, the corresponding property is a function that takes an argument of type E and doesn't return anything.
+
+
+
+
+### f
 
 
 ## Learn Angular fundamentals
