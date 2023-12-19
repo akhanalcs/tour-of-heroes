@@ -588,10 +588,59 @@ For eg: It refers to types of `SquareEvent` and `CircleEvent`.
 - `[E in Events as E["kind"]]` maps over `Events`, and for each type in the union (for eg: `SquareEvent`, `CircleEvent`), it uses the value of the kind property as the key. So each key in the new `EventConfig` type will be a string representing the kind of the event.
 - `(event: E) => void` means that for each E in Events, the corresponding property is a function that takes an argument of type E and doesn't return anything.
 
+### Mapped Type using conditional type
+Let's say we have a `Users` table
+```ts
+// A user row might look like this in TypeScript
+type User = {
+  id: number;   // might be auto incremented by DB
+  name: string; // contains textual name data
+};
+```
+Example user is a row in the Users table
+```ts
+let exampleUser: User = {
+  id: 1,
+  name: "John Doe"
+};
+```
+
+Define a type that represents the schema of `User` and also some metadata information
+```ts
+type DBFields = {
+  id: { format: "incrementing" };
+  name: { type: string; pii: true };
+};
+```
+
+Now let's define a type that finds out the properties with PII information
+```ts
+type ExtractPII<Type> = {
+  [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
+};
+```
+
+Now use this mapped type on `DBFields` to find out the fields with PII information
+```ts
+type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>;
+// type ObjectsNeedingGDPRDeletion = {
+//     id: false;
+//     name: true;
+// }
+```
+
+Now create an object (note that we're doing this manually) that corresponds to `ObjectsNeedingGDPRDeletion` type.
+```ts
+let deletionMarkers: ObjectsNeedingGDPRDeletion = {
+  id: false,
+  name: true
+};
+```
 
 
 
-### f
+
+
 
 
 ## Learn Angular fundamentals
