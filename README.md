@@ -591,7 +591,7 @@ For eg: It refers to types of `SquareEvent` and `CircleEvent`.
 ### [Mapped Type using conditional type](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#further-exploration)
 [Read this](https://stackoverflow.com/q/77688517/8644294) for a great example.
 
-### Template literal types
+### [Template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#string-unions-in-types)
 Consider this code.
 ```ts
 type PropEventSource<Type> = {
@@ -640,7 +640,34 @@ declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type
 ```
 This is a function declaration. It is declared to accept an object of any type `T`. It return an object that as the complete set of properties from `T` as well as methods declared in `PropEventSource<Type>` which is denoted by the intersection type `Type & PropEventSource<Type>`.
 
+#### How the code works
+When this runs
+```ts
+const person = makeWatchedObject({
+  firstName: "Saoirse",
+  lastName: "Ronan",
+  age: 26
+});
+```
 
+It'll transform `person` into below (essentially adding `on` method)
+```ts
+const person = {
+  firstName: "Saoirse", 
+  lastName: "Ronan", 
+  age: 26,
+  on: function(eventName, callback) {
+    // on method's do something with void return type
+  }
+};
+```
+
+And to register the actual event name and callback, you do this
+```ts
+person.on("firstNameChanged", () => {});
+```
+
+### 
 
 
 
