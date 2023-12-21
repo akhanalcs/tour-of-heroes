@@ -618,13 +618,27 @@ When you view the emitted JS from this, it looks like this
 
 <img width="900" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/96383584-80f8-45bf-bb6a-89a5ef53585e">
 
-Notice that the type and function declaration doesn't exist.  
+Notice that the type and function declaration don't exist in the transpiled code (shown on the right hand side).  
 TypeScript's static types are only used at design type for type checking and don't have real values at runtime.
 
 And when you try to run it, you get errors
 
-<img width="350" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/c315cdee-4012-41a6-aac8-c70d2def13b0">
+<img width="300" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/c315cdee-4012-41a6-aac8-c70d2def13b0">
 
+This means that the function declaration is just describing how `makeWatchedObject` looks like. We need to have an actual definition of `makeWatchedObject` function that applies the described behavior.
+
+#### Code explanation
+```ts
+type PropEventSource<Type> = {
+    on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;
+};
+```
+`PropEventSource<Type>` is a type that declares a method called `on`. The method takes 2 parameters: `eventName`, which is a string composed of the name of a property from Type with "Changed" appended on it, and `callback`, which is a function that accepts any value. The `on` method returns nothing(`void`).
+
+```ts
+declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
+```
+This is a function declaration. It is declared to accept an object of any type `T`. It return an object that as the complete set of properties from `T` as well as methods declared in `PropEventSource<Type>` which is denoted by the intersection type `Type & PropEventSource<Type>`.
 
 
 
