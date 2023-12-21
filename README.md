@@ -588,54 +588,44 @@ For eg: It refers to types of `SquareEvent` and `CircleEvent`.
 - `[E in Events as E["kind"]]` maps over `Events`, and for each type in the union (for eg: `SquareEvent`, `CircleEvent`), it uses the value of the kind property as the key. So each key in the new `EventConfig` type will be a string representing the kind of the event.
 - `(event: E) => void` means that for each E in Events, the corresponding property is a function that takes an argument of type E and doesn't return anything.
 
-### Mapped Type using conditional type
-Let's say we have a `Users` table
+### [Mapped Type using conditional type](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#further-exploration)
+[Read this](https://stackoverflow.com/q/77688517/8644294) for a great example.
+
+### Template literal types
+Consider this code.
 ```ts
-// A user row might look like this in TypeScript
-type User = {
-  id: number;   // might be auto incremented by DB
-  name: string; // contains textual name data
+type PropEventSource<Type> = {
+    on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;
 };
-```
-Example user is a row in the Users table
-```ts
-let exampleUser: User = {
-  id: 1,
-  name: "John Doe"
-};
+ 
+/// Create a "watched object" with an `on` method
+/// so that you can watch for changes to properties.
+declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
+
+const person = makeWatchedObject({
+  firstName: "Saoirse",
+  lastName: "Ronan",
+  age: 26
+});
+ 
+person.on("firstNameChanged", () => {});
+ 
+// Prevent easy human error (using the key instead of the event name)
+person.on("firstName", () => {});
 ```
 
-Define a type that represents the schema of `User` and also some metadata information
-```ts
-type DBFields = {
-  id: { format: "incrementing" };
-  name: { type: string; pii: true };
-};
-```
+When you view the emitted JS from this, it looks like this
 
-Now let's define a type that finds out the properties with PII information
-```ts
-type ExtractPII<Type> = {
-  [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
-};
-```
+<img width="900" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/96383584-80f8-45bf-bb6a-89a5ef53585e">
 
-Now use this mapped type on `DBFields` to find out the fields with PII information
-```ts
-type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>;
-// type ObjectsNeedingGDPRDeletion = {
-//     id: false;
-//     name: true;
-// }
-```
+Notice that the type and function declaration doesn't exist.  
+TypeScript's static types are only used at design type for type checking and don't have real values at runtime.
 
-Now create an object (note that we're doing this manually) that corresponds to `ObjectsNeedingGDPRDeletion` type.
-```ts
-let deletionMarkers: ObjectsNeedingGDPRDeletion = {
-  id: false,
-  name: true
-};
-```
+And when you try to run it, you get errors
+
+<img width="350" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/c315cdee-4012-41a6-aac8-c70d2def13b0">
+
+
 
 
 
