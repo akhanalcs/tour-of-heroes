@@ -592,13 +592,13 @@ For eg: It refers to types of `SquareEvent` and `CircleEvent`.
 [Read this](https://stackoverflow.com/q/77688517/8644294) for a great example.
 
 ### [Template literal types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#string-unions-in-types)
-Consider this code.
+Consider this code where a function (`makeWatchedObject`) adds a new function called `on()` to a passed object.
 ```ts
 type PropEventSource<Type> = {
     on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;
 };
- 
-/// Create a "watched object" with an `on` method
+
+/// IMPORTANT NOTE: Create a "watched object" with an `on` method
 /// so that you can watch for changes to properties.
 declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;
 
@@ -607,7 +607,8 @@ const person = makeWatchedObject({
   lastName: "Ronan",
   age: 26
 });
- 
+
+// Just calling the on method created by makeWatchedObject function definition
 person.on("firstNameChanged", () => {});
  
 // Prevent easy human error (using the key instead of the event name)
@@ -640,7 +641,11 @@ declare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type
 ```
 This is a function declaration. It is declared to accept an object of any type `T`. It return an object that as the complete set of properties from `T` as well as methods declared in `PropEventSource<Type>` which is denoted by the intersection type `Type & PropEventSource<Type>`.
 
-#### How the code works
+This is how `&` looks like
+
+<img width="300" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/368819e4-39a5-46e6-a861-7cd2a3728fff">
+
+#### How the code works (see below section for a simpler example)
 When this runs
 ```ts
 const person = makeWatchedObject({
@@ -656,18 +661,65 @@ const person = {
   firstName: "Saoirse", 
   lastName: "Ronan", 
   age: 26,
-  on: function(eventName, callback) {
-    // on method's do something with void return type
+  on(eventName: "firstNameChanged" | "lastNameChanged" | "ageChanged", callback: (newValue: any) => void): void {
+    // This is executed when you do person.on(...)
+    // Here is where "makeWatchedObject" function will add logic to bind the eventName to the callback
   }
 };
 ```
 
-And to register the actual event name and callback, you do this
+And to specify the event name and callback, you do this
 ```ts
-person.on("firstNameChanged", () => {});
+person.on("firstNameChanged", (newValue) => {
+  console.log(`firstName was changed to ${newValue}!`);
+});
 ```
 
-### 
+#### Simpler example based on above code
+Given this type
+```ts
+type PropEventSource<Type> = {
+    on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;
+};
+```
+
+Let's consider this object
+```ts
+const myObj = {
+  name: "something"
+}
+```
+
+Create an event map
+```ts
+// Create an event map to store the event callback
+const eventMap = {};
+```
+
+Let's create an object of type `PropEventSource<typeof myObj>`
+```ts
+// Define an object that matches the PropEventSource pattern for 'myObj'.
+const myProppedObj: PropEventSource<typeof myObj> = {
+  on(eventName: "nameChanged", callback: (newValue: any) => void) {
+    eventMap[eventName] = callback; // bind the callback to the event name.
+  }
+};
+```
+
+Use the `on` method
+```ts
+myProppedObj.on('nameChanged', (newValue) => {console.log(newValue)});
+```
+
+Now this event can be triggered somewhere in the code, for example like when `myObj.name` is changed at which point you can do this
+```ts
+if(eventMap['nameChanged']) {
+  eventMap['nameChanged'](myObj.name);
+}
+```
+
+
+
 
 
 
