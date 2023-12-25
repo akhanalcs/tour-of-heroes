@@ -718,6 +718,207 @@ if(eventMap['nameChanged']) {
 }
 ```
 
+### Initialization Order in JS vs CS
+| JS Initialization Order                  	| C# Initialization Order                  	|
+|------------------------------------------	|------------------------------------------	|
+| The base class fields are initialized    	| The derived class fields are initialized 	|
+| The base class constructor runs          	| The base class fields are initialized    	|
+| The derived class fields are initialized 	| The base class constructor runs          	|
+| The derived class constructor runs       	| The derived class constructor runs       	|
+| Reference](https://www.typescriptlang.org/docs/handbook/2/classes.html#initialization-order) | [Reference](https://stackoverflow.com/a/140541/8644294) |
+
+### [`protected` access modifier](https://www.typescriptlang.org/docs/handbook/2/classes.html#protected)
+`protected` members are only visible within the class and its subclasses.
+
+For eg:
+```ts
+class Greeter {
+  public greet() {
+    console.log("Hello, " + this.getName());
+  }
+  protected getName() {
+    return "hi";
+  }
+}
+
+class SpecialGreeter extends Greeter {
+  public howdy() {
+    // OK to access protected member here
+    console.log("Howdy, " + this.getName());
+  }
+}
+const g = new SpecialGreeter();
+g.greet(); // OK
+g.getName(); // NOT OK
+// ^^^ This will throw this error: Property 'getName' is protected and only accessible within class 'Greeter' and its subclasses.
+```
+
+### [Static blocks in classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#static-blocks-in-classes)
+A static block serves a specific purpose in a class. It is used to execute a block of code when the class is first initialized.
+
+- Static blocks have their independent **scope**. Variables declared within them are not visible to the rest of the class.
+- Static blocks are executed only once when the class is initialized (compare that to constructors which gets called every time we create an instance of a class).
+- Static blocks can access and modify private static fields within the class, allowing for complex initialization logic for these fields without exposing this logic elsewhere in the class.
+
+```ts
+class Foo {
+    static #count = 0;
+ 
+    get count() {
+        return Foo.#count;
+    }
+ 
+    static {
+        try {
+            const lastInstances = loadLastInstances();
+            Foo.#count += lastInstances.length;
+        }
+        catch {}
+    }
+}
+```
+
+### Type parameters in Static members
+```ts
+class Box<Type> {
+  static defaultValue: Type; // ERR: Static members cannot reference class type parameters.
+}
+```
+
+Remember that types are always fully erased! At runtime, there’s only one `Box.defaultValue` property slot (no matter how many instances of `Box<Type>` you have).
+
+This means that setting `Box<string>.defaultValue` (if that were possible) would also change `Box<number>.defaultValue` - not good. The `static` members of a generic class can never refer to the class’s type parameters.
+
+### `this` at Runtime in Classes
+```ts
+class MyClass {
+  name = "MyClass";
+  getName() {
+    return this.name;
+  }
+}
+const c = new MyClass();
+const obj = {
+  name: "obj",
+  getName: c.getName,
+};
+ 
+// Prints "obj", not "MyClass"
+console.log(obj.getName());
+```
+
+**Why that happened?**
+
+The value of `this` inside a function depends on how the function was called. In this example, because the function was called through the `obj` reference, its value of this was `obj` rather than the class instance.
+
+Consider another example
+```ts
+class MyClass {
+  name = "MyClass";
+  getName(this: MyClass) {
+    return this.name;
+  }
+}
+const c = new MyClass();
+// OK
+c.getName();
+ 
+// Error, would crash
+const g = c.getName;
+console.log(g()); // ERR: The 'this' context of type 'void' is not assignable to method's 'this' of type 'MyClass'.
+```
+
+In a method or function definition, an initial parameter named `this` has special meaning in TypeScript. These parameters are erased during compilation. TypeScript checks that calling a function with a `this` parameter is done so with a correct context.
+
+**Why the error?**
+
+In JS and TS when you assign a method like `c.getName` to a variable `g` and then try to invoke it as `g()`, the context of `this` is lost.
+When `g()` is called, `this` no longer points to the `MyClass` instance. Instead, it refers to the undefined global object (in strict mode) or the window object (in non-strict mode).
+
+`void` is the type of this when calling `g()`. The type `void` is not assignable to type `MyClass` (as expected by `getName`), hence the error.
+
+### [Parameter Properties](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties)
+Shorthand for Property declaration and initialization in TS classes.
+
+This is exactly the same
+```ts
+class FileRep {
+  constructor(path: string, public content: string) {
+  }
+}
+```
+
+as this
+```ts
+class FileRep{
+  content: string
+  constructor(path: string, content: string) {
+    this.content = content;
+  }
+}
+```
+
+TypeScript offers special syntax for turning a constructor parameter into a class property with the same name and value. These are called parameter properties and are created by prefixing a constructor argument with one of the visibility modifiers `public`, `private`, `protected`, or `readonly`.
+
+### [`this` based type guards](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-based-type-guards)
+```ts
+class FileSystemObject {
+  isFile(): this is FileRep {
+    return this instanceof FileRep;
+  }
+  //... other code here
+  constructor(public path: string, private networked: boolean) {}
+}
+```
+`this is FileRep` is a type guard that is used in _return position_ for methods. It tells TypeScript that, within the scope where `isFile()` returns true, `this` should be treated as `FileRep`.
+
+`isFile()` checks if the object it's called on (`this`) is an instance of `FileRep` with `this instanceof FileRep`. If it returns true, TypeScript will then consider `this` as `FileRep` for the rest of the current scope.
+
+`this instanceof FileRep` is a runtime check that returns true if the `this` object is an instance of the `FileRep` class.
+
+#### Use case: Lazy validation of a particular field
+This case removes an `undefined` from the value held inside box when `hasValue` has been verified to be true.
+```ts
+class Box<T> {
+  value?: T;
+ 
+  hasValue(): this is { value: T } {
+    return this.value !== undefined;
+  }
+}
+
+const box = new Box();
+box.value = "Gameboy";
+
+// Here the type of value property is:
+// (property) Box<unknown>.value?: unknown
+box.value;
+
+if (box.hasValue()) {
+  // Here the type of box is:
+  // Box<unknown> & {
+       value: unknown;
+  // }
+  // The type of value is:
+  // value: unknown
+  // Here the value is not "undefined"
+  box.value;
+}
+```
+
+`Box<unknown>` represents the box object as an instance of `Box` class, but we don't know what type `T` is (hence `unknown`).
+```ts
+  Box<unknown> & {
+    value: unknown;
+  }
+```
+This type means: "`Box<unknown>` (where value can possibly be undefined) INTERSECTED WITH (&) an object where the property value is known to be defined (non-undefined)."
+
+Due to the intersection (&), TypeScript merges these two definitions, essentially telling it "treat this as a `Box<unknown>`, but also consider that value is definitely defined within this scope."
+
+
+
+
 
 
 
