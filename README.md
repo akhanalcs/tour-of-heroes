@@ -916,8 +916,35 @@ This type means: "`Box<unknown>` (where value can possibly be undefined) INTERSE
 
 Due to the intersection (&), TypeScript merges these two definitions, essentially telling it "treat this as a `Box<unknown>`, but also consider that value is definitely defined within this scope."
 
+### Passing Constructor as Parameters to Methods
+There are 2 ways to do this
+1. Using `ctor: typeof ClassName`
+2. Using `ctor: new () => ClassName`
 
+Example:
+```ts
+class MyTest{
+  myMethod() {
+    return 'Hello!';
+  }
+}
 
+// First way
+function func1(ctor: typeof MyTest) {
+  const instance = new ctor();
+  console.log(instance.myMethod());
+}
+
+// Second way
+function func2(ctor: new () => MyTest) {
+  const instance = new ctor();
+  console.log(instance.myMethod());
+}
+
+// Test it
+func1(MyTest); // Logs: "Hello!"
+func2(MyTest); // Logs: "Hello!"
+```
 
 
 
