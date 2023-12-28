@@ -198,7 +198,7 @@ To use the above component, put it in `app.component.html` like so
 
 Now you'll get this error
 
-<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/b5503899-9c56-475a-8b4b-36ebaee00ade">
+<img width="750" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/b5503899-9c56-475a-8b4b-36ebaee00ade">
 
 To fix that, go to `app.component.ts` and add this component to the imports array.
 ```ts
