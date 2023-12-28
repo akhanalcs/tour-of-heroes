@@ -179,6 +179,31 @@ Note that it's more common to use "files" for entry points to your application l
 ### Check out other files on your own
 They are pretty straightforward.
 
+## [Make changes to the app and start tinkering](https://angular.io/tutorial/tour-of-heroes/toh-pt0#make-changes-to-the-application)
+Make sure you have run this command which hot reloads your changes
+```bash
+ng serve
+```
+
+### Add a new component
+To create a new component, you can run the generate command by being on the workspace level folder.
+
+<img width="800" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/13b54e66-5853-4b21-9b9b-2b1a06caded2">
+
+### Use the new component
+To use the above component, put it in `app.component.html` like so
+```html
+<app-heroes></app-heroes>
+```
+
+Now you'll get this error
+
+<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/b5503899-9c56-475a-8b4b-36ebaee00ade">
+
+To fix that, go to `app.component.ts` and add this component to the imports array.
+```ts
+  imports: [CommonModule, RouterOutlet, HeroesComponent],
+```
 
 
 
