@@ -131,6 +131,31 @@ More info [here](https://youtu.be/ahCwqrYpIuM?si=w_RZN7F2rsnA-ULk) and [here](ht
 
 The best one is at Typescript's [official web site](https://www.typescriptlang.org/tsconfig).
 
+### tsconfig.spec.json
+https://github.com/akhanalcs/tour-of-heroes/blob/e2baa5549986680fee6664c8921ee90b3356324c/tsconfig.spec.json#L2-L14
+
+- The `extends` statement means that `tsconfig.spec.json` will inherit settings from the base `tsconfig.json` file.
+- `outDir` tells TS where to emit the compiled JS files. The files in this directory will be used by test runners or development servers to execute your tests.
+- `"types": ["jasmine"]` instructs the TS compiler to include Jasmine's type definitions in the **compilation**. They are in "node_modules/@types/**jasmine**/index.d.ts" file.  
+  This makes the Jasmine's types globally available in your tests files (.spec.ts). It offers advantages like auto-completion, type checking and so on, when you are writing your tests.
+- `include` property tells the compiler which files should be included in the compilation. `"src/**/*.spec.ts"` means include all the `.spec.ts` (your test files) in your src folder and its subfolders. `"src/**/*.d.ts"` does the same for TypeScript declaration files.  
+  The type information from `.d.ts` files will be available when writing code in any TypeScript files "included" in your compiler configuration.
+
+### tsconfig.app.json
+https://github.com/akhanalcs/tour-of-heroes/blob/e2baa5549986680fee6664c8921ee90b3356324c/tsconfig.app.json#L2-L14
+
+- `outDir` tells TS compiler where to output JS files transpiled from your TS source. The primary consumer of the outDir files is the Angular CLI when you run commands like `ng build`.
+  
+  It doesn't need to be checked in, so it's in `.gitignore`
+  
+  <img width="200" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/2cb7dd83-c207-4b4b-9cbb-6e60740fb105">
+
+- `"types": []` is telling TypeScript to include no **global** type declarations from the "node_modules/@types" directory, which is where third-party library type definitions are typically located. By making this an empty array, it's excluding all global types from "node_modules/@types".
+- `"include": ["src/**/*.d.ts"]` is specifying that TypeScript should include the type declaration files (.d.ts files) that exist within your src directory.
+- `"files": [ "src/main.ts" ]` denotes that `main.ts` is the entry point of your Angular application. TypeScript compiles this file and any files it references directly or indirectly.
+
+Note that it's more common to use "files" for entry points to your application like `src/main.ts` and "include" for additional files or glob patterns.
+
 ### Check out other files on your own
 They are pretty straightforward.
 
