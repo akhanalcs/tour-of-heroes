@@ -1,27 +1,22 @@
 # tour-of-heroes
-Learning Angular with Tour of Heroes tutorial from Angular docs.
-
-I'll be following along this tutorial: https://angular.io/tutorial/tour-of-heroes
+Learning Angular from [official docs](https://angular.io/tutorial/tour-of-heroes) and various other sources.
 
 Agenda for today:
-angular ssr with aspnet core backend - https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1
+angular ssr with aspnet core backend - 
 https://github.com/thecloudnativewebapp/GoCloudNative.Bff
 https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0#resources
 
-TS handbook
 tour of heroes
 node tutorial
 
-cook rice at 2
-
 Go to asian market to get pearl river bridge mushroom dark soy sauce
-
-https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/
-https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/
 
 ## Helpful links
 1. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
 2. [Nx, Angular and NestJS](https://thefullstack.engineer/full-stack-development-series-part-1-getting-started-with-nx-angular-and-nestjs/)
+3. [Secure web app using Angular and AspNetCore server](https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/)
+4. [MS Identity Samples](https://github.com/Azure-Samples/ms-identity-ciam-javascript-tutorial)
+5. [Angular SSR with AspNetCore server](https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1)
 
 ## Learn Typescript
 Go through the notes [here](docs/learn-typescript.md).
