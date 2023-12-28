@@ -156,7 +156,7 @@ https://github.com/akhanalcs/tour-of-heroes/blob/e2baa5549986680fee6664c8921ee90
 
 Note that it's more common to use "files" for entry points to your application like `src/main.ts` and "include" for additional files or glob patterns.
 
-### angular.json (sounds somewhat like .csproj files in .NET world)
+### angular.json (sounds somewhat like .csproj and .sln files in .NET world)
 - This is a configuration file for all angular projects in the workspace. This file is used by the Angular CLI. 
 
   For eg: I have 1 project now
