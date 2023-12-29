@@ -256,3 +256,4 @@ Now use it in your html inside interpolation binding syntax
 
 
 
+
