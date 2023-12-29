@@ -248,6 +248,32 @@ Now use it in your html inside interpolation binding syntax
 <h2>{{ hero.name | uppercase }} Details</h2>
 ```
 
+## [Provider and Injector in Dependency Injection](https://angular.io/tutorial/tour-of-heroes/toh-pt4#provide-the-heroservice)
+```ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class HeroService {
+
+  constructor() { }
+
+}
+```
+
+A provider ("manufacturer") is something that can create or deliver a service. In this case, it instantiates the HeroService class to provide the service.
+
+The `@Injectable` decorator designates this class as a provider the can create a service. So here entire `HeroService` class is the "manufacturer".
+
+To make sure that the `HeroService` can provide this service, register it with the injector ("delivery service"). The injector is the object that chooses and injects the provider where the application requires it. The injector is a part of Angular's internal system and mechanisms.
+
+**Remember it using this analogy:**
+
+Annotating a service with `@Injectable({ providedIn: 'root' })` is like giving that service to a 'root' delivery man (injector) and saying, "Keep this service in your bag. When a component or another service needs it, provide them with a single instance of it from your bag." The 'root' man carries the service throughout your application and shares the same single instance of that service with anyone who asks for it.
+
+
+
 
 
 
