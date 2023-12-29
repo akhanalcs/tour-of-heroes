@@ -1,1 +1,33 @@
-<h2>{{ hero }}</h2>
+<h2>My Heroes</h2>
+<ul class="heroes">
+  @for(hero of heroes; track hero.id){
+    <li>
+      <!-- Class binding can add and remove a CSS class conditionally: -->
+      <!-- [class.some-css-class]="some-condition" -->
+      <button type="button" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
+        <span class="badge">{{ hero.id }}</span>
+        <span class="name">{{ hero.name }}</span>
+      </button>
+    </li>
+  } @empty {
+    <span>Got nothing for you brah!</span>
+  }
+
+<!--  <li *ngFor="let hero of heroes">-->
+<!--    <button type="button" (click)="onSelect(hero)">-->
+<!--      <span class="badge">{{ hero.id }}</span>-->
+<!--      <span class="name">{{ hero.name }}</span>-->
+<!--    </button>-->
+<!--  </li>-->
+</ul>
+
+@if(selectedHero){
+  <div>
+    <h2>{{ selectedHero.name | uppercase }} Details</h2>
+    <div>id: {{ selectedHero.id }}</div>
+    <div>
+      <label for="hero-name">Hero name: </label>
+      <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
+    </div>
+  </div>
+}
