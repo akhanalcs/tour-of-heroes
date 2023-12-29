@@ -205,6 +205,49 @@ To fix that, go to `app.component.ts` and add this component to the imports arra
   imports: [CommonModule, RouterOutlet, HeroesComponent],
 ```
 
+### Pipe
+Pipe is a function you can use in template expressions to accept and input value and return a transformed value.
+
+For eg: `uppercase`
+
+It's in `/tour-of-heroes/node_modules/@angular/common/index.d.ts` (you don't really have to know this, I just like digging into things)
+```ts
+export declare class UpperCasePipe implements PipeTransform {
+    /**
+     * @param value The string to transform to upper case.
+     */
+    transform(value: string): string;
+    transform(value: null | undefined): null;
+    transform(value: string | null | undefined): string | null;
+    static ɵfac: i0.ɵɵFactoryDeclaration<UpperCasePipe, never>;
+    static ɵpipe: i0.ɵɵPipeDeclaration<UpperCasePipe, "uppercase", true>;
+}
+```
+Take a look at the static property `epipe` that has a type of `i0.ɵɵPipeDeclaration<UpperCasePipe, "uppercase", true>`
+```ts
+static ɵpipe: i0.ɵɵPipeDeclaration<UpperCasePipe, "uppercase", true>;
+```
+
+i0 just refers to Angular's internal API.  
+`"uppercase"` refers to name of the pipe as a string.  
+Boolean value of `true` denotes whether the pipe is "pure" (doesn't have side effects and won't re-evaluate if the inputs haven't changed).  
+#### Using pipes
+In your component, import it
+```ts
+import { UpperCasePipe } from "@angular/common";
+```
+and add it to imports array
+```ts
+  imports: [
+    UpperCasePipe
+  ],
+```
+
+Now use it in your html inside interpolation binding syntax
+```html
+<h2>{{ hero.name | uppercase }} Details</h2>
+```
+
 
 
 
