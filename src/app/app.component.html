@@ -1,5 +1,11 @@
 <h1>{{ title }}</h1>
-<app-heroes></app-heroes>
-<app-messages></app-messages>
+<nav>
+  <!-- routerLink attribute is selector for the RouterLink directive that turns user clicks into router navigations.-->
+  <a routerLink="/dashboard">Dashboard</a>
+  <a routerLink="/heroes">Heroes</a>
+</nav>
 
+<!--This tells the router where to display routed views.-->
 <router-outlet></router-outlet>
+
+<app-messages></app-messages>
