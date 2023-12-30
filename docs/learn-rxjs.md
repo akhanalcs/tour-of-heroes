@@ -4,6 +4,33 @@
 1. [RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
 2. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
 
+## Basics
+- **Observable:** represents the idea of an invokable collection of future values or events.
+- **Observer:** is a collection of callbacks that knows how to listen to values delivered by the Observable.
+
+[Reference](https://rxjs.dev/guide/overview)
+
+### Example using `of`
+Emit the values `10`, `20`, `30`.
+```ts
+import { of } from 'rxjs';
+
+of(10, 20, 30)
+  .subscribe({
+    next: value => console.log('next:', value),
+    error: err => console.log('error:', err),
+    complete: () => console.log('the end'),
+  });
+
+// Outputs
+// next: 10
+// next: 20
+// next: 30
+// the end
+```
+
+[Reference](https://rxjs.dev/api/index/function/of)
+
 ## The big picture
 <img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cf35a3e0-3479-4050-9379-5beef102bba5">
 
