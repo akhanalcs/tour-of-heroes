@@ -209,7 +209,7 @@ To fix that, go to `app.component.ts` and add this component to the imports arra
 ```
 
 ### Pipe
-Pipe is a function you can use in template expressions to accept and input value and return a transformed value.
+Pipe is a function you can use in template expressions to accept an input value and return a transformed value.
 
 For eg: `uppercase`
 
