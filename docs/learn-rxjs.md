@@ -1,8 +1,10 @@
 # Learn RxJS
-[RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
 
-The big picture
+## Helpful links
+1. [RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
+2. [Official docs](https://rxjs.dev/guide/overview)
 
+## The big picture
 <img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cf35a3e0-3479-4050-9379-5beef102bba5">
 
 Pipe
@@ -124,5 +126,3 @@ const observable = new Observable((subscriber) => {
   map((average) => `The average age is ${average}`)
 );
 ```
-
-## [Read more from the official docs](https://rxjs.dev/guide/overview)
