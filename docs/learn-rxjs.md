@@ -2,7 +2,7 @@
 
 ## Helpful links
 1. [RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
-2. [Official docs](https://rxjs.dev/guide/overview)
+2. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
 
 ## The big picture
 <img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cf35a3e0-3479-4050-9379-5beef102bba5">
