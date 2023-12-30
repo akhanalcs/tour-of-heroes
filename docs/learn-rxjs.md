@@ -11,12 +11,14 @@
 [Reference](https://rxjs.dev/guide/overview)
 
 ### Example using `of`
-Emit the values `10`, `20`, `30`.
+`of` converts the arguments to an observable sequence.
+
+For example: Emit the values `10`, `20`, `30`.
 ```ts
 import { of } from 'rxjs';
 
-of(10, 20, 30)
-  .subscribe({
+of(10, 20, 30)                                  // <--- Observable
+  .subscribe({                                  // <--- Observer
     next: value => console.log('next:', value),
     error: err => console.log('error:', err),
     complete: () => console.log('the end'),
@@ -38,7 +40,7 @@ Pipe
 
 <img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/c68ddf95-a4c9-4aeb-a8ab-f9d44179ba29">
 
-## Terminology
+### Terminology
 - Observable is something that emits data
 - Operators operate on data that Observable emits
 - Assembly line of operators is known as the pipe
