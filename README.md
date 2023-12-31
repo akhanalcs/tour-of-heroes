@@ -189,7 +189,7 @@ ng serve
 ```
 
 ### Add a new component
-To create a new component, you can run the generate command by being on the workspace level folder.
+To create a new component, you can run the generate command by being at the workspace level folder.
 
 <img width="800" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/13b54e66-5853-4b21-9b9b-2b1a06caded2">
 
@@ -275,6 +275,29 @@ To make sure that the `HeroService` can provide this service, register it with t
 
 Annotating a service with `@Injectable({ providedIn: 'root' })` is like giving that service to a 'root' delivery man (injector) and saying, "Keep this service in your bag. When a component or another service needs it, provide them with a single instance of it (singleton) from your bag." The 'root' man carries the service throughout your application and shares the same single instance of that service with anyone who asks for it.
 
+## Routing
+### [Add RouterOutlet](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-routeroutlet)
+### [Add dashboard view](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-a-dashboard-view)
+Don't follow about the module stuffs there. 
+
+Read [this](https://angular.dev/guide/routing/router-tutorial) and add some route definitions in `app.routes.ts`
+```ts
+export const routes: Routes = [
+  // This route redirects a URL that fully matches the empty path to the route whose path is '/dashboard'
+  { path: '', redirectTo:'/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'detail/:id', component: HeroDetailComponent }
+];
+```
+| PROPERTIES | DETAILS                                                               |
+|------------|-----------------------------------------------------------------------|
+| path       | A string that matches the URL in the browser address bar.              |
+| component  | The component that the router should create when navigating to this route. |
+
+### [Navigating to Hero details](https://angular.io/tutorial/tour-of-heroes/toh-pt5#navigating-to-hero-details)
+
+After this, just follow along in that tutorial.
 
 
 
