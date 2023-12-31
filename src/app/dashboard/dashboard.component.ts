@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from "../hero";
 import { HeroService } from "../hero.service";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

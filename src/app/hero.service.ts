@@ -15,4 +15,10 @@ export class HeroService {
     this.messageService.add('HeroService: fetched heroes');
     return of(HEROES); // More info here: https://rxjs.dev/api/index/function/of
   }
+
+  getHero(id: number): Observable<Hero>{
+    const hero = HEROES.find(h => h.id === id)!;
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return of(hero);
+  }
 }

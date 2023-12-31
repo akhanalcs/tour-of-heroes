@@ -1,7 +1,9 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
   @for(hero of heroes; track hero.id){
-    <a>
+    <!-- routerLink attribute is selector for the RouterLink directive that turns user clicks into router navigations.-->
+    <a
+      routerLink="/detail/{{hero.id}}">
       {{hero.name}}
     </a>
   }

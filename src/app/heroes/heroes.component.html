@@ -2,25 +2,22 @@
 <ul class="heroes">
   @for(hero of heroes; track hero.id){
     <li>
+      <!-- Old Code. Remove it. -->
       <!-- Class binding can add and remove a CSS class conditionally: -->
       <!-- [class.some-css-class]="some-condition" -->
-      <button type="button" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
-        <span class="badge">{{ hero.id }}</span>
-        <span class="name">{{ hero.name }}</span>
-      </button>
+      <!-- <button type="button" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">-->
+      <!--   <span class="badge">{{ hero.id }}</span>-->
+      <!--   <span class="name">{{ hero.name }}</span>-->
+      <!-- </button>-->
+      <a routerLink="/detail/{{hero.id}}">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+      </a>
     </li>
   } @empty {
     <span>Got nothing for you brah!</span>
   }
-
-<!--  Old way of doing loop -->
-<!--  <li *ngFor="let hero of heroes">-->
-<!--    <button type="button" (click)="onSelect(hero)">-->
-<!--      <span class="badge">{{ hero.id }}</span>-->
-<!--      <span class="name">{{ hero.name }}</span>-->
-<!--    </button>-->
-<!--  </li>-->
 </ul>
 
+<!-- Old Code. Remove it. -->
 <!-- Property Binding: Bind 'selectedHero' to child component's 'hero' property -->
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<!--<app-hero-detail [hero]="selectedHero"></app-hero-detail>-->
