@@ -123,8 +123,20 @@ The `--open` flag opens a browser to `http://localhost:4200`.
   <img width="500" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/2693b659-d2de-4dcd-bac8-757d2e0a80ff">
 - Push it to Github with "Commit and Push".
 
+### Show npm window
+The npm tool window opens when you select a `package.json` file in the Project tool window or open it in the editor and select Show npm Scripts from the context menu.
+
+<img width="500" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/36acc4cd-2400-4f23-81c0-812b403a31b8">
+
+The scripts in your `package.json` now shows up in the npm window
+
+<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/feb2a10c-d70c-408e-a8a7-bb439b2c758d">
+
 ## Looking at the generated files
 Reference: https://angular.io/guide/file-structure
+
+## Debugging Angular apps
+Take a look at [this post](https://stackoverflow.com/q/77740608/8644294) of mine.
 
 ### main.ts
 The `main.ts` file is the [entry point into our app](https://youtu.be/zTLDv5YIpqc?si=VrhjVmK8ItwAb7ai&t=40), where we simply bootstrap the Angular application and mount the `AppComponent` to the [DOM](https://youtu.be/NO5kUNxGIu0?si=ESJxUXRzhbhDNd0D).
