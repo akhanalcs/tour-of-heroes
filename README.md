@@ -123,8 +123,20 @@ The `--open` flag opens a browser to `http://localhost:4200`.
   <img width="500" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/2693b659-d2de-4dcd-bac8-757d2e0a80ff">
 - Push it to Github with "Commit and Push".
 
+### Show npm window
+The npm tool window opens when you select a `package.json` file in the Project tool window or open it in the editor and select Show npm Scripts from the context menu.
+
+<img width="500" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/36acc4cd-2400-4f23-81c0-812b403a31b8">
+
+The scripts in your `package.json` now shows up in the npm window
+
+<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/feb2a10c-d70c-408e-a8a7-bb439b2c758d">
+
 ## Looking at the generated files
 Reference: https://angular.io/guide/file-structure
+
+## Debugging Angular apps
+Take a look at [this post](https://stackoverflow.com/q/77740608/8644294) of mine.
 
 ### main.ts
 The `main.ts` file is the [entry point into our app](https://youtu.be/zTLDv5YIpqc?si=VrhjVmK8ItwAb7ai&t=40), where we simply bootstrap the Angular application and mount the `AppComponent` to the [DOM](https://youtu.be/NO5kUNxGIu0?si=ESJxUXRzhbhDNd0D).
@@ -189,7 +201,7 @@ ng serve
 ```
 
 ### Add a new component
-To create a new component, you can run the generate command by being on the workspace level folder.
+To create a new component, you can run the generate command by being at the workspace level folder.
 
 <img width="800" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/13b54e66-5853-4b21-9b9b-2b1a06caded2">
 
@@ -275,6 +287,29 @@ To make sure that the `HeroService` can provide this service, register it with t
 
 Annotating a service with `@Injectable({ providedIn: 'root' })` is like giving that service to a 'root' delivery man (injector) and saying, "Keep this service in your bag. When a component or another service needs it, provide them with a single instance of it (singleton) from your bag." The 'root' man carries the service throughout your application and shares the same single instance of that service with anyone who asks for it.
 
+## Routing
+### [Add RouterOutlet](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-routeroutlet)
+### [Add dashboard view](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-a-dashboard-view)
+Don't follow about the module stuffs there. 
+
+Read [this](https://angular.dev/guide/routing/router-tutorial) and add some route definitions in `app.routes.ts`
+```ts
+export const routes: Routes = [
+  // This route redirects a URL that fully matches the empty path to the route whose path is '/dashboard'
+  { path: '', redirectTo:'/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'detail/:id', component: HeroDetailComponent }
+];
+```
+| PROPERTIES | DETAILS                                                               |
+|------------|-----------------------------------------------------------------------|
+| path       | A string that matches the URL in the browser address bar.              |
+| component  | The component that the router should create when navigating to this route. |
+
+### [Navigating to Hero details](https://angular.io/tutorial/tour-of-heroes/toh-pt5#navigating-to-hero-details)
+
+After this, just follow along in that tutorial.
 
 
 
