@@ -7,10 +7,15 @@
 4. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
 
 ## Basics
+### Terms
 - **Observable:** represents the idea of an invokable collection of future values or events.
   
   As a rule, an Observable does _nothing_ until something subscribes.
 - **Observer:** is a collection of callbacks that knows how to listen to values delivered by the Observable.
+
+<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/09ca9eaa-d2dc-4599-85e8-781896ec394b">
+
+Example:
 
 <img width="550" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cec013b0-b774-4205-8f1b-28d87a6436e4">
 
