@@ -12,7 +12,7 @@
   As a rule, an Observable does _nothing_ until something subscribes.
 - **Observer:** is a collection of callbacks that knows how to listen to values delivered by the Observable.
 
-[Reference](https://rxjs.dev/guide/overview)
+<img width="550" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cec013b0-b774-4205-8f1b-28d87a6436e4">
 
 ### Example using `of`
 `of` converts the arguments to an observable sequence.
