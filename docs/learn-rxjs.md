@@ -2,15 +2,22 @@
 
 ## Helpful links
 1. [RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
-2. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
+2. [RxJS in Angular](https://youtu.be/vtCDRiG__D4?si=vNNOK_Fu5T9NFt0T)(Excellent!)
+3. [Promise vs Observables vs Subjects](https://youtu.be/GSI7iyK_ju4?si=VPVLNnYZ5G0niFVd) (Excellent!)
+4. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
 
 ## Basics
+### Terms
 - **Observable:** represents the idea of an invokable collection of future values or events.
   
   As a rule, an Observable does _nothing_ until something subscribes.
 - **Observer:** is a collection of callbacks that knows how to listen to values delivered by the Observable.
 
-[Reference](https://rxjs.dev/guide/overview)
+<img width="650" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/09ca9eaa-d2dc-4599-85e8-781896ec394b">
+
+Example:
+
+<img width="550" alt="image" src="https://github.com/akhanalcs/tour-of-heroes/assets/30603497/cec013b0-b774-4205-8f1b-28d87a6436e4">
 
 ### Example using `of`
 `of` converts the arguments to an observable sequence.
