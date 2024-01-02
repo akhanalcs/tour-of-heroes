@@ -3,6 +3,7 @@
 ## Helpful links
 1. [RxJS crash course](https://youtu.be/tGWBy6Vqq9w?si=dJXYCxNn9M7X1Jya)
 2. [Official docs](https://rxjs.dev/guide/overview)(Excellent!)
+3. [Promise vs Observables vs Subjects](https://youtu.be/GSI7iyK_ju4?si=VPVLNnYZ5G0niFVd) (Excellent!)
 
 ## Basics
 - **Observable:** represents the idea of an invokable collection of future values or events.
