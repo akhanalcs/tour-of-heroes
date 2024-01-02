@@ -290,7 +290,7 @@ Annotating a service with `@Injectable({ providedIn: 'root' })` is like giving t
 ## Routing
 ### [Add RouterOutlet](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-routeroutlet)
 ### [Add dashboard view](https://angular.io/tutorial/tour-of-heroes/toh-pt5#add-a-dashboard-view)
-Don't follow about the module stuffs there. 
+Don't follow about the module stuffs there. We do module import stuffs in `app.config.ts` in standalone apps.
 
 Read [this](https://angular.dev/guide/routing/router-tutorial) and add some route definitions in `app.routes.ts`
 ```ts
