@@ -317,6 +317,8 @@ After this, just follow along in that tutorial.
 ## Error Handling with Observables
 [Watch this first](https://youtu.be/L9kFTps_7Tk?si=Jr1mR5hTKOJSlZzh)
 
+When an Observable generates an error, it stops and won't emit further.
+
 Consider this code
 https://github.com/akhanalcs/tour-of-heroes/blob/81b7f1ff889efcf98248b404a451e57f9e1b43eb/src/app/hero.service.ts#L69-L105
 
