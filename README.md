@@ -24,6 +24,9 @@ Go through the notes [here](docs/learn-typescript.md).
 ## Learn RxJS
 Go through the notes [here](docs/learn-rxjs.md).
 
+## Learn Signals
+Go through the notes [here](docs/learn-signals.md).
+
 ## Learn Angular fundamentals
 [Angular in 2 minutes](https://youtu.be/Y2i6U1L6oyM?si=ld3SFvAalG2-mHz5)  
 [What is Angular (Great overview!)](https://angular.io/guide/what-is-angular)
