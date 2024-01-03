@@ -79,14 +79,15 @@ export class HeroService {
         tap(heroes => heroes.length ?
           this.log(`found heroes matching "${term}"`) :
           this.log(`no heroes matching "${term}"`)),
+        // handleError is executed when an error occurs in the API call, and it returns a new function
+        // This new function is only called when catchError passes the error to it
+        // So 1.handleError call happens and 2. the function returned by handleError call happens
+        // Function returned by handleError provides the replacement Observable
         catchError(this.handleError<Hero[]>('searchHeroes', []))
       );
   }
 
-  private log(message: string): void {
-    this.messageService.add(`HeroService: ${message}`);
-  }
-
+  // Learn more here: https://youtu.be/L9kFTps_7Tk?si=M6ZWbR71SD13DPk4&t=107
   // This method returns an 'error handler' function that expects 'error: any` input parameter
   private handleError<T>(operation = 'operation', result?: T){
     return (error: any): Observable<T> => {
@@ -101,5 +102,9 @@ export class HeroService {
       // Let the app keep running by returning an empty result.
       return of(emptyResult);
     }
+  }
+
+  private log(message: string): void {
+    this.messageService.add(`HeroService: ${message}`);
   }
 }
