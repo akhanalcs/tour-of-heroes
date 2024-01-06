@@ -164,3 +164,55 @@ const observable = new Observable((subscriber) => {
   map((average) => `The average age is ${average}`)
 );
 ```
+
+## RxJS operators
+### [switchMap](https://rxjs.dev/api/operators/switchMap)
+`switched` below sets up a blueprint of how data will flow when that Observable is subscribed to.
+So, at the time of the `const switched = ...` line itself, no data has been produced yet. The actual data production and emitting starts only when `.subscribe()` is called on switched.
+
+`switched` holds instructions that says: "When I am subscribed to, take each number from the source Observable, create a new Observable using of(x, x**2, x**3), and emit its values one by one. And when the next number arrives from the source, switch to a new Observable, and repeat the process".
+
+As values are emitted from the source Observable, each value is mapped to a new "inner" Observable using the expression `of(x, x**2, x**3)`. `switchMap` then immediately subscribes to this new inner Observable.
+
+The inner Observable starts emitting its values `(x, x**2, and x**3)`. As it does, switchMap captures those emissions and forwards them directly to the output, which is the switched Observable that we initially subscribed to. This is the "flattening" process.
+
+When the next value arrives from the source Observable, switchMap will repeat this process: it creates and subscribes to a new inner Observable, and begins forwarding its emissions to the output.
+
+`switchMap` is constantly "switching" its focus to the most recent inner Observable.
+
+Think of `switchMap` like a combination of `map`, `switch` and `flat`: for each input, it applies a function (`map`), switches to a new Observable (`switch`), and merges its values into the output stream (`flat`).
+
+```ts
+import { of, switchMap } from 'rxjs';
+
+// 👇 The type of 'const switched' is 'Observable<number>'
+// 'switchMap' generates a new observable using source observable values: of(1, 2, 3)
+const switched = of(1, 2, 3) // Need source observable to pipe it through
+  .pipe(
+    // switchMap automatically subscribes to the inner observable, flatten the resulting observable and unsubscribe
+    // The "flattening" process takes values emitted by inner observable and sends them directly to the output Observable.
+    switchMap(x =>
+      // This is inner observable
+      of(x, x ** 2, x ** 3))
+  );
+switched.subscribe(x => console.log(x));
+// outputs
+// 1
+// 1
+// 1
+// 2
+// 4
+// 8
+// 3
+// 9
+// 27
+```
+
+If the source Observable emits values at a faster pace than an inner Observable completes, switchMap will cause those in-progress inner Observables to be unsubscribed, effectively ignoring their not-yet-emitted values.
+
+- `of(1, 1, 1)` starts emitting, but before it can finish...
+- 2 arrives from the source Observable and switchMap immediately switches to `of(2, 4, 8)`, ignoring any remaining values from `of(1, 1, 1)`
+- If `of(2, 4, 8)` takes too long and 3 arrives from the source Observable, `switchMap` will again switch immediately to `of(3, 9, 27)`, ignoring any remaining values from `of(2, 4, 8)`
+
+That's why `switchMap` is often used in situations where new values should "cancel" old values, like HTTP requests in an autocomplete input where you always want results from the latest input, not older ones.
+
