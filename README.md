@@ -314,6 +314,20 @@ export const routes: Routes = [
 
 After this, just follow along in that tutorial.
 
+## Error Handling with Observables
+[Watch this first](https://youtu.be/L9kFTps_7Tk?si=Jr1mR5hTKOJSlZzh)
+
+When an Observable generates an error, it stops and won't emit further.
+
+Consider this code
+https://github.com/akhanalcs/tour-of-heroes/blob/81b7f1ff889efcf98248b404a451e57f9e1b43eb/src/app/hero.service.ts#L69-L105
+
+- If an error is encountered during an http call, the method `handleError` is immediately called within the `catchError` operator in the RxJS pipe.
+- The `catchError` operator intercepts an Observable that fails. It then calls the function it has been provided, which in this case is `handleError`.
+- Once the `handleError` method is called, it returns another function that accepts the error parameter. At this point, this returned function is not executed yet.
+- The function returned from `handleError` is then executed by the `catchError` operator, and the caught error is passed to it.
+
+So in summary, `handleError` returns a "callback" for `catchError` operator that processes the error, and returns a new, non-erroneous "replacement Observable" to prevent the stream from being completely terminated.
 
 
 
