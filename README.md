@@ -18,6 +18,9 @@ Go to asian market to get pearl river bridge mushroom dark soy sauce
 4. [MS Identity Samples](https://github.com/Azure-Samples/ms-identity-ciam-javascript-tutorial)
 5. [Angular SSR with AspNetCore server](https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1)
 
+## Learn JS Basics
+Go through the notes [here](docs/learn-javascript.md).
+
 ## Learn Typescript
 Go through the notes [here](docs/learn-typescript.md).
 
