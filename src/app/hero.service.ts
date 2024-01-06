@@ -82,7 +82,7 @@ export class HeroService {
         // handleError is executed when an error occurs in the API call, and it returns a new function
         // This new function is only called when catchError passes the error to it
         // So 1.handleError call happens and 2. the function returned by handleError call happens
-        // Function returned by handleError provides the replacement Observable
+        // Function returned by handleError provides the "replacement Observable"
         catchError(this.handleError<Hero[]>('searchHeroes', []))
       );
   }
