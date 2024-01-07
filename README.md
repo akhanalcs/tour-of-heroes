@@ -18,6 +18,216 @@ Go to asian market to get pearl river bridge mushroom dark soy sauce
 4. [MS Identity Samples](https://github.com/Azure-Samples/ms-identity-ciam-javascript-tutorial)
 5. [Angular SSR with AspNetCore server](https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1)
 
+## Learn JS Basics
+Go through the notes [here](docs/learn-javascript.md).
+
+### import vs require
+<table>
+<thead>
+  <tr>
+    <th></th>
+    <th><code>import</code> (ES Modules syntax)</th>
+    <th><code>require</code> (CommonJS Modules syntax)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+  <td><b>Summary</b></td>
+  <td valign="top">
+  <p>It is the latest standard for working with modules in JavaScript and is supported in modern browsers and environments that transpile or support ES6, like TypeScript or Babel.</p>
+  </td>
+  <td valign="top">
+  <p>It was not originally part of JavaScript, but was adopted as the standard for Node.js, which has been routinely used in JavaScript server-side development.</p>
+  <p>While Node.js historically used CommonJS, it now also supports ES6 modules.</p>
+  </td>
+  </tr>
+  <tr>
+  <td><b>Exports</b></td>
+  <td valign="top">
+  <p>Static (pre-defined). The structure of the module's exports is determined when the code is parsed, not while running.</p>
+  <p>This static nature allows tooling such as bundlers and linters to analyze the code without executing it, enabling features like better tree-shaking and faster load times in browsers.</p>
+  For example:
+
+  ```js
+  // myModule.js
+  export function myFunc() { /*...*/ }
+  export const MY_CONST = 123;
+  ```
+
+  </td>
+  <td valign="top">
+  <p>Computed during runtime. The exports in a module are determined during the execution of the code.</p> 
+  For example:
+  
+  ```js
+  // myModule.js
+  if (process.env.NODE_ENV === 'development') {
+    module.exports.debug = function debug() {
+      console.log('Debugging...');
+    }
+  } else {
+    module.exports.log = function log() {
+      console.log('Logging...');
+    }
+  }
+  ```
+
+  </td>
+  </tr>
+  <tr>
+  <td><b>Loading Modules</b></td>
+  <td valign="top">
+  <p>Can be asynchronous, allowing efficient, selective loading of module parts.<br>This can result in faster load times and better performance.
+  </p>
+  
+  For example:
+
+  ```js
+  import { myFunc } from './myModule.js';
+  myFunc();
+  ```
+
+  </td>
+  <td valign="top">
+  <p>Synchronous (loads modules one by one).<br>Always loads entire module, which could affect performance if the module is large.</p>
+  For example:
+
+  ```js
+  const { debug, log } = require('./myModule.js');
+  if(debug) debug();
+  if(log) log();
+  ```
+  
+  </td>
+  </tr>
+  <tr>
+  <td><b>Full Example</b></td>
+  <td valign="top">
+  Make sure to export the function first.
+  
+  ```js
+  // somefile.js
+  export function sayHello() {
+    console.log("Hello, world!");
+  }
+  
+  console.log("somefile has been loaded!");
+  ```
+
+  Then import it
+
+  ```js
+  // main.js
+  import { sayHello } from './somefile.js';
+  sayHello();
+
+  // 👇 Outputs 👇
+  // "somefile has been loaded!"
+  // "Hello, world!"
+  ```
+  
+  </td>
+  <td valign="top">
+  Make sure to add the function to <code>module.exports</code>.
+  
+  ```js
+  // somefile.js
+  function sayHello() {
+    console.log("Hello, world!");
+  }
+  
+  module.exports = { sayHello };
+  
+  console.log("somefile has been loaded!");
+  ```
+
+  Then import it
+
+  ```js
+  // main.js
+  const { sayHello } = require('./somefile.js');
+  sayHello();
+
+  // 👇 Outputs 👇
+  // "somefile has been loaded!"
+  // "Hello, world!"
+  ```
+  
+  </td>
+  </tr>
+  <tr>
+  <td><b>Scope</b></td>
+  <td valign="top">
+  <p>If an exported value changes in the module it was defined in, that change is visible in all modules that import this value.</p>
+  For example:
+  
+  ```js
+  // somefile.js
+  let count = 1;
+  export { count };
+  
+  setTimeout(() => count = 2, 1000);
+  ```
+
+  Now use it somewhere
+
+  ```js
+  // main.js
+  import { count } from './somefile.js';
+  
+  console.log(count); // 1
+  setTimeout(() => console.log(count), 1000); // 2
+  ```
+  
+  </td>
+  <td valign="top">
+  <p>The exports are <i>copied</i> at the time of requiring the module.<br>So even if an exported value changes in the module it was defined in, that change is <b>not</b> visible in the module where it's required.</p>
+  For example:
+  
+  ```js
+  // somefile.js
+  let count = 1;
+  module.exports.count = count;
+  
+  setTimeout(() => count = 2, 1000);
+  ```
+
+  Now use it somewhere
+
+  ```js
+  // main.js
+  const mod = require('./somefile.js');
+  
+  console.log(mod.count); // 1
+  setTimeout(() => console.log(mod.count), 1000); // 1
+  ```
+  
+  </td>
+  </tr>
+</tbody>
+</table>
+
+**More examples**
+
+```js
+// somefile.js
+function sayHello() {
+  console.log("Hello, world!");
+}
+
+console.log("somefile has been loaded!");
+```
+
+Now if we just wanted to execute this file, we could do either of the following
+```js
+// main.js
+import './somefile.js';
+// or
+require('./somefile.js');
+```
+
+This will print `"somefile has been loaded!"`.
+
 ## Learn Typescript
 Go through the notes [here](docs/learn-typescript.md).
 
