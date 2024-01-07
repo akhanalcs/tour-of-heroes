@@ -62,9 +62,13 @@ Go through the notes [here](docs/learn-javascript.md).
   ```js
   // myModule.js
   if (process.env.NODE_ENV === 'development') {
-    module.exports.debug = function debug() { console.log('Debugging...'); }
+    module.exports.debug = function debug() {
+      console.log('Debugging...');
+    }
   } else {
-    module.exports.log = function log() { console.log('Logging...'); }
+    module.exports.log = function log() {
+      console.log('Logging...');
+    }
   }
   ```
 
