@@ -192,7 +192,7 @@ Go through the notes [here](docs/learn-javascript.md).
   setTimeout(() => count = 2, 1000);
   ```
 
-  Then import it
+  Now use it somewhere
 
   ```js
   // main.js
