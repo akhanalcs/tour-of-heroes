@@ -1,9 +1,9 @@
-import {Component, OnInit, signal} from '@angular/core';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from "rxjs";
 import { Hero } from "../hero";
-import {RouterLink} from "@angular/router";
-import {AsyncPipe, NgForOf} from "@angular/common";
-import {HeroService} from "../hero.service";
+import { RouterLink } from "@angular/router";
+import { AsyncPipe, NgForOf } from "@angular/common";
+import { HeroService } from "../hero.service";
 
 @Component({
   selector: 'app-hero-search',
@@ -19,7 +19,6 @@ import {HeroService} from "../hero.service";
 export class HeroSearchComponent implements OnInit {
   heroes$!: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
-  private testSignal = signal<number>(1);
 
   constructor(private heroService: HeroService) {}
 
@@ -33,15 +32,19 @@ export class HeroSearchComponent implements OnInit {
   ngOnInit(): void {
     // Learn more here: https://youtu.be/vtCDRiG__D4?si=F2qjot5atRc0MTFX&t=1459
     // 'this.heroes$' is outer observable which is subscribed in the template: 'heroes$ | async'
+    // This just means that when search term is pushed into 'this.searchTerms', emit them here
     this.heroes$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       // So the 'heroService.searchHeroes' call will only happen after 300ms
-      debounceTime(10000),
+      debounceTime(300),
 
+      // ignore new term if same as previous term
       distinctUntilChanged(),
 
+      // switch to new search observable each time the term changes
       // switchMap is a higher order mapping operator that automatically subscribes to the inner observable,
       // flatten the resulting observable and unsubscribe
+      // The "flattening" process takes values emitted by inner observable and sends them directly to the output Observable.
       switchMap(term =>
         // the call here gives us inner observable but who subscribes to it? => switchMap 👆
         this.heroService.searchHeroes(term))
