@@ -1,15 +1,5 @@
 # tour-of-heroes
-Learning Angular from [official docs](https://angular.io/tutorial/tour-of-heroes) and various other sources.
-
-Agenda for today:
-angular ssr with aspnet core backend - 
-https://github.com/thecloudnativewebapp/GoCloudNative.Bff
-https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0#resources
-
-tour of heroes
-node tutorial
-
-Go to asian market to get pearl river bridge mushroom dark soy sauce
+Learning Angular 17 from [official docs](https://angular.io/tutorial/tour-of-heroes) and various other sources.
 
 ## Helpful links
 1. Envato Tuts+'s [Angular tutorial](https://youtu.be/JWhRMyyF7nc?si=3mllCIMx1v5PTJZw)
@@ -17,6 +7,8 @@ Go to asian market to get pearl river bridge mushroom dark soy sauce
 3. [Secure web app using Angular and AspNetCore server](https://damienbod.com/2023/09/11/implement-a-secure-web-application-using-nx-standalone-angular-and-an-asp-net-core-server/)
 4. [MS Identity Samples](https://github.com/Azure-Samples/ms-identity-ciam-javascript-tutorial)
 5. [Angular SSR with AspNetCore server](https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1)
+6. [BFF with .NET and Angular](https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0)
+7. [GoCloudNative.Bff](https://github.com/thecloudnativewebapp/GoCloudNative.Bff)
 
 ## Learn JS Basics
 Go through the notes [here](docs/learn-javascript.md).
