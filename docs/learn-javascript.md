@@ -19,6 +19,8 @@ let sayHi = function() {
 ```
 No matter how the function is created, a function is a value. Both examples above store a function in the `sayHi` variable.
 
+## [Export and Import](https://javascript.info/import-export)
+
 ## map and filter
 `map` creates a new array by transforming every element of the original array.
 ```js
