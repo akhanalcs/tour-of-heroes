@@ -1,6 +1,23 @@
 # Learn JavaScript Basics
 
 ## Helpful links
+1. [Javascript Info](https://javascript.info/)(Excellent!)
+
+## [Function declaration vs Function expression](https://javascript.info/function-expressions)
+Function declaration
+```js
+function sayHi() {
+  alert( "Hello" );
+}
+```
+
+Function expression
+```js
+let sayHi = function() {
+  alert( "Hello" );
+};
+```
+No matter how the function is created, a function is a value. Both examples above store a function in the `sayHi` variable.
 
 ## map and filter
 `map` creates a new array by transforming every element of the original array.
