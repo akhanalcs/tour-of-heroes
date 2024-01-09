@@ -3,7 +3,9 @@
 ## Helpful links
 1. [Javascript Info](https://javascript.info/)(Excellent!)
 
-## [Function declaration vs Function expression](https://javascript.info/function-expressions)
+## Function declaration vs Function expression
+[Reference](https://javascript.info/function-expressions)
+
 Function declaration
 ```js
 function sayHi() {
