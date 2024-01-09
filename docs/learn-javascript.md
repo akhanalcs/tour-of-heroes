@@ -19,7 +19,32 @@ let sayHi = function() {
 ```
 No matter how the function is created, a function is a value. Both examples above store a function in the `sayHi` variable.
 
-## [Export and Import](https://javascript.info/import-export)
+## Export and Import
+[Read this](https://javascript.info/import-export) as this is an important concept.
+
+## Array Destructuring and Object Destructuring
+### Array Destructuring
+```js
+let colors = ["red", "green", "blue"];
+
+let [firstColor, secondColor] = colors;
+
+console.log(firstColor); // "red"
+console.log(secondColor); // "green"
+```
+
+### Object Destructuring
+```js
+let person = {
+    name: "John Doe",
+    age: 17
+};
+
+let {name, age} = person;
+
+console.log(name); // "John Doe"
+console.log(age); // 17
+```
 
 ## map and filter
 `map` creates a new array by transforming every element of the original array.
