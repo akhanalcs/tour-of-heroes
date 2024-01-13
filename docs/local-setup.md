@@ -76,7 +76,8 @@ nvm install --lts
 
 <img width="650" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/56703672-6285-4a8e-b984-bb17299ae7e7">
 
-Now check it  
+Now check it
+
 <img width="450" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/3fd706e0-16c8-4954-a49c-9a1b52ffb9be">
 
 [Reference](https://heynode.com/tutorial/install-nodejs-locally-nvm/)
@@ -102,14 +103,14 @@ npx tsc -v // To view the Typescript version that's installed as your dev depend
 
 It first looks into your local project's dependencies for a command. If it can't find it locally, then it searches in globally installed packages. And if it can't find it there either, npx will temporarily download, use, and remove the package - helping ensure you use the latest version all the time without needing to permanently install it.
 
-## Setting up your IDE
+## Editor
 I'm using Jetbrains Rider. It already comes with the features present in WebStorm so I don't have to use a separate IDE for doing full stack work.
 
 <img width="600" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/f99a9814-0ef9-4f9e-aa39-68be1aeebb7a">
 
 [Reference](https://www.jetbrains.com/rider/features/)
 
-### Settings in your Jetbrains IDE Rider
+## Editor Settings
 1. Show memory
    
    <img width="650" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/a3d99d4b-542c-4860-a460-f30b81fd3c9f">
@@ -120,34 +121,73 @@ I'm using Jetbrains Rider. It already comes with the features present in WebStor
 
 2. I'll add more when I find more cool settings to turn on...
 
-### Plugins in your Jetbrains IDE Rider
-#### Preetier
+## Editor Plugins
+### ESLint
+[Reference](https://www.jetbrains.com/help/webstorm/eslint.html#ws_js_linters_eslint_install)
+
+```bash
+npm install --save-dev eslint
+```
+
+Create a file named `.eslintrc.json` at the `package.json` level to store lint configs.
+
+Activate and configure ESLint in Rider﻿ by following [this guide](https://www.jetbrains.com/help/webstorm/eslint.html#ws_js_eslint_automatic_configuration).
+
+To see an example in a React project, take a look at [this](https://github.com/akhanalcs/reactjs/blob/main/README.md#linting).
+
+### Preetier
+[Prettier in WebStorm](https://www.jetbrains.com/help/webstorm/prettier.html)  
+[How to setup Prettier](https://youtu.be/DqfQ4DPnRqI?si=xpbwGE0UXo17_SPW)  
+
 Standard for working with JS TS projects. Rider already comes bundled with it
 
 <img width="550" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/7fe063f4-734c-4b65-a15d-b8ab81f2da3e">
 
-The IDE already uses Prettier but to make the settings consistent across teams, you might want to install it as a dev dependency of the project so that everyone who works on this project use the same preetier version and preetier settings. This will appear in `package.json`.
 ```bash
 npm install --save-dev --save-exact prettier
 ```
 
-`--save-dev` means to install that package as a dev dependency which is a dependency that is only required for dev and testing.  
-By installing it as a development dependency, you can ensure that it is not included in the production build of your application, which can help reduce the size of the final bundle.
+Create a file named `.prettierignore` at the `package.json` level to specify files you want to ignore. For example:
+```
+node_modules
+```
 
-`--save-exact` is used to lock the version of the package you're installing. This is useful when you want to ensure that your application always uses a specific version of a package, even if newer versions are released. 
+Configure Prettier in Rider
+
+<img width="500" alt="image" src="https://github.com/akhanalcs/reactjs/assets/30603497/671519b5-c8bc-4708-848a-bde74887f6f8">
+
+[Turn off all rules that are unnecessary or might conflict with Prettier](https://github.com/prettier/eslint-config-prettier)
+```bash
+npm install --save-dev eslint-config-prettier
+```
+
+And add this to your ESLint configuration. Now your `.eslintrc.json` file should look like this
+```json
+{
+  // eslint-config-prettier
+  "extends": ["prettier"]
+}
+```
+
+**Note about --save-dev and --save-exact:**  
+- `--save-dev` means to install that package as a dev dependency which is a dependency that is only required for dev and testing.
+- `--save-exact` is used to lock the version of the package you're installing. This is useful when you want to ensure that your application always uses a specific version of a package, even if newer versions are released. 
 
 For eg:
-```
+```json
   "prettier": "^2.6.2", // This isn't exact because package manager can update the Minor version (^)
   "prettier": "2.6.2", // This is exact
 ```
 
-[How to setup Prettier](https://youtu.be/DqfQ4DPnRqI?si=xpbwGE0UXo17_SPW)  
-[Setting up Prettier in Jetbrains IDEs](https://prettier.io/docs/en/webstorm)
+**Note about `^` and `~` in version numbers:**  
+- The caret (`^`) allows changes that do not include the next major version.<br>
+  For example, `^2.3.0` allows changes from `2.3.0` up to but not including `3.0.0`.
+- The tilde (`~`) allows changes that do not include the next minor version and major version, thereby only allowing patch-level changes for a given minor version.<br>
+  For example, `~2.3.0` allows changes from `2.3.0` up to but not including `2.4.0`.
 
-#### AceJump
+### AceJump
 https://plugins.jetbrains.com/plugin/7086-acejump
-#### String Manipulation
+### String Manipulation
 https://plugins.jetbrains.com/plugin/2162-string-manipulation
 
 ## Setup Angular CLI
@@ -160,7 +200,7 @@ Choose either way (1 or 2) shown below.
    npx --package @angular/cli
    ```
 
-2. Installs the Angular CLI package globally on the computer.
+2. Installs the Angular CLI package globally on the computer (I went with this).
    ```bash
    npm install -g @angular/cli
    ```
