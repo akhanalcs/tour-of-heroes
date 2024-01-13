@@ -169,7 +169,7 @@ And add this to your ESLint configuration. Now your `.eslintrc.json` file should
 }
 ```
 
-**Note about --save-dev and --save-exact:**  
+**Note about --save-dev and --save-exact:**
 - `--save-dev` means to install that package as a dev dependency which is a dependency that is only required for dev and testing.
 - `--save-exact` is used to lock the version of the package you're installing. This is useful when you want to ensure that your application always uses a specific version of a package, even if newer versions are released. 
 
@@ -179,7 +179,7 @@ For eg:
   "prettier": "2.6.2", // This is exact
 ```
 
-**Note about `^` and `~` in version numbers:**  
+**Note about `^` and `~` in version numbers:**
 - The caret (`^`) allows changes that do not include the next major version.<br>
   For example, `^2.3.0` allows changes from `2.3.0` up to but not including `3.0.0`.
 - The tilde (`~`) allows changes that do not include the next minor version and major version, thereby only allowing patch-level changes for a given minor version.<br>
