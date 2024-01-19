@@ -18,8 +18,36 @@ Function expression
 let sayHi = function() {
   alert( "Hello" );
 };
+
+// Or
+let sayHi = () => { alert("Hello") }; // Arrow function
 ```
 No matter how the function is created, a function is a value. Both examples above store a function in the `sayHi` variable.
+
+## Implicit vs Explicit return in Arrow functions
+```js
+// An arrow function with {}, no automatic return
+const addOneA = (num) => { num + 1 }; 
+console.log(addOneA(1)); // undefined
+
+// An arrow function without {}, will automatically return
+const addOneB = (num) => num + 1; 
+console.log(addOneB(1)); // 2
+```
+
+`addOneA` is equivalent to
+```js
+function addOneA(num){
+  num + 1;
+}
+```
+
+`addOneB` is equivalent to
+```js
+function addOneB(num){
+  return num + 1;
+}
+```
 
 ## Export and Import
 [Read this](https://javascript.info/import-export) as this is an important concept.
