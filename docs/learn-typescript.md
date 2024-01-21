@@ -700,7 +700,7 @@ if(eventMap['nameChanged']) {
 | The base class constructor runs          	| The base class fields are initialized    	|
 | The derived class fields are initialized 	| The base class constructor runs          	|
 | The derived class constructor runs       	| The derived class constructor runs       	|
-| Reference](https://www.typescriptlang.org/docs/handbook/2/classes.html#initialization-order) | [Reference](https://stackoverflow.com/a/140541/8644294) |
+| [Reference](https://www.typescriptlang.org/docs/handbook/2/classes.html#initialization-order) | [Reference](https://stackoverflow.com/a/140541/8644294) |
 
 ## [`protected` access modifier](https://www.typescriptlang.org/docs/handbook/2/classes.html#protected)
 `protected` members are only visible within the class and its subclasses.
