@@ -1,7 +1,7 @@
 # Learn JavaScript Basics
 
 ## Helpful links
-1. [Javascript Info](https://javascript.info/)(Excellent!)
+1. [Javascript Info](https://javascript.info/)(Read it when you get time!)
 
 ## Function declaration vs Function expression
 [Reference](https://javascript.info/function-expressions)
