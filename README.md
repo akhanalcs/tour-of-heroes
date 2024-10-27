@@ -10,6 +10,9 @@ Learning Angular 17 from [official docs](https://angular.io/tutorial/tour-of-her
 6. [BFF with .NET and Angular](https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0)
 7. [GoCloudNative.Bff](https://github.com/thecloudnativewebapp/GoCloudNative.Bff)
 
+## Local setup
+Go through the notes [here](docs/local-setup.md).
+
 ## Learn JS Basics
 Go through the notes [here](docs/learn-javascript.md).
 
@@ -75,9 +78,6 @@ export class NameCardComponent {
   @Input() name = 'standalone angular'
 }
 ```
-
-## Local setup
-Go through the notes [here](docs/local-setup.md).
 
 ## Create a new app and run it
 [Reference](https://angular.io/tutorial/tour-of-heroes/toh-pt0#create-a-new-workspace-and-an-initial-application)
