@@ -91,5 +91,10 @@
         }
       }
     }
+  },
+  // This setting is used to enable or disable the collection of usage analytics by the Angular CLI. When set to false, it disables the analytics collection, meaning no usage data will be sent to the Angular team.
+  // Somehow it was added. Not sure who. It wasn't here when the project was created.
+  "cli": {
+    "analytics": false
   }
 }

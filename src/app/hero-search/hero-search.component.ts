@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+// A `Subject` is a special type of Observable that allows values to be multicasted to many Observers.
+// Subjects are like EventEmitters: they maintain a registry of many listeners.
+// You can use `Subject` to emit values to multiple subscribers.
+//
+// `switchMap` is a higher-order mapping operator that projects each source value to an Observable which is merged in the output Observable, emitting values only from the most recently projected Observable.
+// When a new value is emitted, it unsubscribes from the previous inner Observable and subscribes to the new one. This is useful for scenarios like search where you want to cancel previous requests and only process the latest one.
+// `Subject` and `switchMap` are both part of the RxJS library in Angular.
+//
+// - `searchTerms` is a `Subject` that emits search terms.
+// - `switchMap` is used to switch to a new search Observable each time the term changes, ensuring only the latest search result is processed.
 import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from "rxjs";
 import { Hero } from "../hero";
 import { RouterLink } from "@angular/router";
@@ -34,6 +44,7 @@ export class HeroSearchComponent implements OnInit {
     // 'this.heroes$' is outer observable which is subscribed in the template: 'heroes$ | async'
     // This just means that when search term is pushed into 'this.searchTerms', emit them here
     this.heroes$ = this.searchTerms.pipe(
+      // Delays the emission of values.
       // wait 300ms after each keystroke before considering the term
       // So the 'heroService.searchHeroes' call will only happen after 300ms
       debounceTime(300),

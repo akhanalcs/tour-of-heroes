@@ -35,6 +35,7 @@ export class HeroService {
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.httpClient.get<Hero>(url)
+      // pipe: A method used to chain multiple operators.
       .pipe(
         tap(_ => this.log(`fetched hero id=${id}`)),
         catchError(this.handleError<Hero>(`getHero id=${id}`))
@@ -83,12 +84,24 @@ export class HeroService {
         // This new function is only called when catchError passes the error to it
         // So 1.handleError call happens and 2. the function returned by handleError call happens
         // Function returned by handleError provides the "replacement Observable"
+        // this.handleError<Hero[]>('searchHeroes', []): This call returns a function that `catchError` will use to handle any errors.
+        // `catchError` then calls the function returned by `handleError<Hero[]>('searchHeroes', [])`.
+        // This function logs the error to the console and logs a message using `this.log`.
+        // Finally, it returns an `Observable` of the default result (`[]` in this case) using `of(result as T)`.
+        // The parameters `'searchHeroes'` and `[]` are passed to `handleError` when it is called within `catchError`.
+        // These parameters are used within the returned function to log the operation name and to provide a default result.
+        // `catchError` passes the `error: any` to the function returned by `private handleError<T>(operation = 'operation', result?: T)`.
         catchError(this.handleError<Hero[]>('searchHeroes', []))
       );
   }
 
+  // Look at: "getHeroes(): Observable<Hero[]> {" above for more info
   // Learn more here: https://youtu.be/L9kFTps_7Tk?si=M6ZWbR71SD13DPk4&t=107
-  // This method returns an 'error handler' function that expects 'error: any` input parameter
+  // The `handleError` method is designed to handle errors that occur during HTTP operations.
+  // It returns a function that takes an error as an argument and returns an `Observable` with a safe value.
+  // `catchError` passes the `error: any` to the function returned by `private handleError<T>(operation = 'operation', result?: T)`.
+  // See closure here: The inner function can access variables (operation and result) from the outer function even after the outer function has finished executing.
+  //  A closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function’s variables, even after the outer function has returned
   private handleError<T>(operation = 'operation', result?: T){
     return (error: any): Observable<T> => {
       // 1TODO: send the error to remote logging infrastructure

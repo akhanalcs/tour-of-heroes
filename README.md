@@ -324,6 +324,26 @@ https://github.com/akhanalcs/tour-of-heroes/blob/81b7f1ff889efcf98248b404a451e57
 
 So in summary, `handleError` returns a "callback" for `catchError` operator that processes the error, and returns a new, non-erroneous "replacement Observable" to prevent the stream from being completely terminated.
 
+## Binding
+- `[]` (square brackets) are used for property binding. They bind the **property** of a DOM element to a **field** in the component.
+- `()` (parentheses) are used for event binding. They bind an **event** of a DOM element to a **method** in the component.
+- `[()]` (banana-in-a-box) is used for **two-way** data binding. It combines property binding and event binding in one syntax.
+
+Here is an example of each:
+```html
+<!-- Property binding -->
+<img [src]="imageUrl">
+
+<!-- Event binding -->
+<!-- It binds the button's click event to the `onClick()` method in the component. -->
+<button (click)="onClick()">Click me</button>
+
+<!-- Two-way data binding -->
+<!-- It binds the input field's value to the `hero.name` property and updates the property when the input value changes. -->
+<input id="hero-name" [(ngModel)]="hero.name" placeholder="name">
+```
+
+
 
 
 
