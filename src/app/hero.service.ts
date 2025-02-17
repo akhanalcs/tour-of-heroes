@@ -22,8 +22,8 @@ export class HeroService {
   }
 
   getHeroes(): Observable<Hero[]> {
-    return this.httpClient.get<Hero[]>(this.heroesUrl)
-      .pipe(
+    return this.httpClient.get<Hero[]>(this.heroesUrl) // <-- This returns an Observable. .get() creates the Observable
+      .pipe(                                           // <-- .pipe() modifies the Observable
         tap(_ => this.log('fetched heroes')),
         // catchError operator passes 'error' to the error handling function
         // 'handleError' function returns a function that will take the 'error' passed by catchError operator

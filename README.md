@@ -9,6 +9,9 @@ Learning Angular 17 from [official docs](https://angular.io/tutorial/tour-of-her
 5. [Angular SSR with AspNetCore server](https://pieterjandeclippel.medium.com/server-side-rendering-in-asp-net-core-angular-2024-version-a617a83324a1)
 6. [BFF with .NET and Angular](https://timdeschryver.dev/blog/lets-make-our-spa-more-secure-by-setting-up-a-net-bff-with-duende-and-auth0)
 7. [GoCloudNative.Bff](https://github.com/thecloudnativewebapp/GoCloudNative.Bff)
+8. https://medium.com/@monkov/angular-using-httpinterceptor-for-token-refreshing-3f04ea2ccb81
+9. https://github.com/Azure-Samples/ms-identity-docs-code-javascript
+10. https://github.com/Azure-Samples/ms-identity-docs-code-dotnet
 
 ## Local setup
 Go through the notes [here](docs/local-setup.md).
