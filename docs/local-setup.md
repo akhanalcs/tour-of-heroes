@@ -50,6 +50,8 @@ Make your terminal pick up the nvm command that was set by the installation in y
 ```
 This is called sourcing and it executes commands from the file (`.bash_profile` here) in the current shell environment. This will pick up the changes to your profile without having to close and reopen the terminal.
 
+Reference: [Working with bash_profile](https://stackoverflow.com/a/77428269/8644294).
+
 Now check your `nvm` version
 
 <img width="400" alt="image" src="https://github.com/akhanalcs/angular-dotnet-realworld/assets/30603497/8ab6cd22-8492-49f0-95b5-8d355ff2aa8d">
