@@ -342,7 +342,8 @@ Here is an example of each:
 <button (click)="onClick()">Click me</button>
 
 <!-- Two-way data binding -->
-<!-- It binds the input field's value to the `hero.name` property and updates the property when the input value changes. -->
+<!-- It binds the input field's value to the `hero.name` property. -->
+<!-- The value updates in both directions: when the input changes, it updates hero.name; when hero.name changes, it updates the input. -->
 <input id="hero-name" [(ngModel)]="hero.name" placeholder="name">
 ```
 
