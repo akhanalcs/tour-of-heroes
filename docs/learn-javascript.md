@@ -31,6 +31,8 @@ const addOneA = (num) => { num + 1 };
 console.log(addOneA(1)); // undefined
 
 // An arrow function without {}, will automatically return
+// When you omit the curly braces {}, it creates an **implicit** return of the expression that follows the arrow =>. 
+// This is also known as a "concise body" syntax.
 const addOneB = (num) => num + 1; 
 console.log(addOneB(1)); // 2
 ```
@@ -45,6 +47,14 @@ function addOneA(num){
 `addOneB` is equivalent to
 ```js
 function addOneB(num){
+  return num + 1;
+}
+// Or
+const addOneB = function(num){
+  return num + 1;
+}
+// Or
+const addOneB = (num) => {
   return num + 1;
 }
 ```
