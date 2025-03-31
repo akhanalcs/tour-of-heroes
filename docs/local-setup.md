@@ -50,6 +50,11 @@ Make your terminal pick up the nvm command that was set by the installation in y
 ```
 This is called sourcing and it executes commands from the file (`.bash_profile` here) in the current shell environment. This will pick up the changes to your profile without having to close and reopen the terminal.
 
+Check your changes
+```bash
+cat .bash_profile
+```
+
 Reference: [Working with bash_profile](https://stackoverflow.com/a/77428269/8644294).
 
 Now check your `nvm` version
