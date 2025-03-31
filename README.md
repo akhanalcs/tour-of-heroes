@@ -12,6 +12,7 @@ Learning Angular 17 from [official docs](https://angular.io/tutorial/tour-of-her
 8. https://medium.com/@monkov/angular-using-httpinterceptor-for-token-refreshing-3f04ea2ccb81
 9. https://github.com/Azure-Samples/ms-identity-docs-code-javascript
 10. https://github.com/Azure-Samples/ms-identity-docs-code-dotnet
+11. https://github.com/gothinkster/angular-realworld-example-app
 
 ## Local setup
 Go through the notes [here](docs/local-setup.md).
